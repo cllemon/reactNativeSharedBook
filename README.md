@@ -2,6 +2,21 @@
 
 Shared book application based on react-native implementation. Focus on sharing and keep moving forward.
 
+### 说明
+
+> 纯粹是想体验一下混合应用而起的一个项目，可能略显粗糙，但会持续写下去，直到达到相当成熟度。
+
+> 服务端主要以 node - egg 搭的一套服务，项目地址。
+
+> APP 将以 ios 为主，兼容 Android 为辅.
+
+> 开发环境 macOS: '10.14' react-native: '0.57.4' node: v8.8.0
+
+> 如有任何问题欢迎在 Issues 交流 🐸
+
+> 注：将持续迭代...
+
+
 ### 产品思路：
 
 1.  首页： 轮播图： 承接一些活动页，或者一些推送等等。
@@ -39,19 +54,6 @@ Shared book application based on react-native implementation. Focus on sharing a
 
 10. 我的页面： 可以上传一些图书。
 
-### 说明
-
-> 纯粹是想体验一下混合应用而起的一个项目，可能略显粗糙，但会持续写下去，直到达到相当成熟度。
-
-> 服务端主要以 node - egg 搭的一套服务，项目地址。
-
-> APP 将以 ios 为主，兼容 Android 为辅.
-
-> 开发环境 macOS: '10.14' react-native: '0.57.4' node: v8.8.0
-
-> 如有任何问题欢迎在 Issues 交流 🐸
-
-> 注：将持续迭代...
 
 ### 目标页面搭建计划（可能更改）
 
@@ -84,13 +86,20 @@ Shared book application based on react-native implementation. Focus on sharing a
 - [ ] 优惠券营销体系 -- 待续
 - [ ] App 上架 -- 待续
 
+
 ## Results the preview
 
-  <img src="https://github.com/cllemon/vue-components-practices/blob/master/src/assets/images/form.jpg" width="330" height= "620" />
+  <img src="https://github.com/cllemon/ReactNativeSharedBook/blob/master/app/assets/images/RN_01.jpeg" width="330" height= "620" />
 
-  <img src="https://github.com/cllemon/vue-components-practices/blob/master/src/assets/images/form.jpg" width="330" height= "620" />
+  <img src="https://github.com/cllemon/ReactNativeSharedBook/blob/master/app/assets/images/RN_02.png" width="330" height= "620" />
 
-  <img src="https://github.com/cllemon/vue-components-practices/blob/master/src/assets/images/form.jpg" width="330" height= "620" />
+  <img src="https://github.com/cllemon/ReactNativeSharedBook/blob/master/app/assets/images/RN_03.png" width="330" height= "620" />
+
+  <img src="https://github.com/cllemon/ReactNativeSharedBook/blob/master/app/assets/images/RN_04.png" width="330" height= "620" />
+
+
+  <img src="https://github.com/cllemon/ReactNativeSharedBook/blob/master/app/assets/images/RN_05.png" width="330" height= "620" />
+
 
 ## Project setup
 
