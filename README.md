@@ -6,7 +6,7 @@ Shared book application based on react-native implementation. Focus on sharing a
 
 > 纯粹是想体验一下混合应用而起的一个项目，可能略显粗糙，但会持续写下去，直到达到相当成熟度。
 
-> 服务端主要以 node - egg 搭的一套服务，项目地址。
+> 服务端主要以 node - egg 搭的一套服务，[接口文档](https://github.com/cllemon/notes/issues/3)。
 
 > APP 将以 ios 为主，兼容 Android 为辅.
 
