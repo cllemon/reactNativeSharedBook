@@ -18,7 +18,6 @@ Shared book application based on react-native implementation. Focus on sharing a
 
 ### Results the preview
 
-  <img src="https://github.com/cllemon/ReactNativeSharedBook/blob/master/app/assets/images/RN_01.jpeg" width="330" height= "620" />
 
   <img src="https://github.com/cllemon/ReactNativeSharedBook/blob/master/app/assets/images/RN_02.png" width="330" height= "620" />
 
@@ -26,6 +25,8 @@ Shared book application based on react-native implementation. Focus on sharing a
 
   <img src="https://github.com/cllemon/ReactNativeSharedBook/blob/master/app/assets/images/RN_04.png" width="330" height= "620" />
 
+
+  <img src="https://github.com/cllemon/ReactNativeSharedBook/blob/master/app/assets/images/RN_01.jpeg" width="330" height= "620" />
 
   <img src="https://github.com/cllemon/ReactNativeSharedBook/blob/master/app/assets/images/RN_05.png" width="330" height= "620" />
 
