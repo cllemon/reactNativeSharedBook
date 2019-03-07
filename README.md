@@ -16,6 +16,19 @@ Shared book application based on react-native implementation. Focus on sharing a
 
 > 注：将持续迭代...
 
+### Results the preview
+
+  <img src="https://github.com/cllemon/ReactNativeSharedBook/blob/master/app/assets/images/RN_01.jpeg" width="330" height= "620" />
+
+  <img src="https://github.com/cllemon/ReactNativeSharedBook/blob/master/app/assets/images/RN_02.png" width="330" height= "620" />
+
+  <img src="https://github.com/cllemon/ReactNativeSharedBook/blob/master/app/assets/images/RN_03.png" width="330" height= "620" />
+
+  <img src="https://github.com/cllemon/ReactNativeSharedBook/blob/master/app/assets/images/RN_04.png" width="330" height= "620" />
+
+
+  <img src="https://github.com/cllemon/ReactNativeSharedBook/blob/master/app/assets/images/RN_05.png" width="330" height= "620" />
+
 
 ### 产品思路：
 
@@ -87,35 +100,23 @@ Shared book application based on react-native implementation. Focus on sharing a
 - [ ] App 上架 -- 待续
 
 
-## Results the preview
-
-  <img src="https://github.com/cllemon/ReactNativeSharedBook/blob/master/app/assets/images/RN_01.jpeg" width="330" height= "620" />
-
-  <img src="https://github.com/cllemon/ReactNativeSharedBook/blob/master/app/assets/images/RN_02.png" width="330" height= "620" />
-
-  <img src="https://github.com/cllemon/ReactNativeSharedBook/blob/master/app/assets/images/RN_03.png" width="330" height= "620" />
-
-  <img src="https://github.com/cllemon/ReactNativeSharedBook/blob/master/app/assets/images/RN_04.png" width="330" height= "620" />
 
 
-  <img src="https://github.com/cllemon/ReactNativeSharedBook/blob/master/app/assets/images/RN_05.png" width="330" height= "620" />
+### Project setup
 
-
-## Project setup
-
-### 安装 React Native 的命令行工具
+#### 安装 React Native 的命令行工具
 
 ```
 yarn add react-native-cli
 ```
 
-### 下载和安装 Android Studio / XCode
+#### 下载和安装 Android Studio / XCode
 
 ```
 App store
 ```
 
-### (指定设备上)运行 APP
+#### (指定设备上)运行 APP
 
 ```
 
