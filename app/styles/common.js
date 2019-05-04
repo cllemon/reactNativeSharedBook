@@ -60,5 +60,13 @@ export default {
         translateY: '-50%'
       }
     ]
-  })
+  }),
+
+  shadow: (elevation = 1, ios) =>
+    Platform.select({
+      ios,
+      android: {
+        elevation: elevation
+      }
+    })
 };

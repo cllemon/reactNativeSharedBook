@@ -39,7 +39,6 @@ export default {
   /**
    * font - size
    */
-  $font_size_extra_large: 24,
   $font_size_extra_large: 20,
   $font_size_large: 18,
   $font_size_medium: 16,
@@ -56,6 +55,7 @@ export default {
    * background
    */
   $background_color_base: '#f5f7fa',
+  $background_color_milky_white: 'rgba(255,255,255,1)',
 
   /**
    * link
@@ -99,6 +99,12 @@ export default {
     shadowOffset: { height: 2, width: 12 },
     shadowOpacity: 1,
     shadowRadius: 0
+  },
+  $ios_box_shadow_light_1: {
+    shadowColor: 'rgba(191,206,221,0.3)',
+    shadowOffset: { height: 0, width: 1 },
+    shadowOpacity: 1,
+    shadowRadius: 10
   },
 
   /**

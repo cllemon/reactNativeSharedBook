@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native';
 import { common, variable } from '../../styles/index';
 import Header from '../../components/header/index';
+import ChickenSoupCard from '../../components/chicken-soup-card/index';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 export default class Desk extends Component {
@@ -29,14 +30,9 @@ export default class Desk extends Component {
             navigation.navigate('Library');
           }}
         />
-        <View>
-          <Text> DeskComponent </Text>
-          <Button
-            title='我的页面'
-            onPress={() => {
-              navigation.openDrawer();
-            }}
-          />
+        <View style={common.mVerticalHorizontal(16, 16)}>
+          <ChickenSoupCard />
+          {/*<Bookcase />*/}
         </View>
       </View>
     );

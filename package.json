@@ -12,6 +12,8 @@
   "dependencies": {
     "axios": "^0.18.0",
     "epubjs-rn": "^0.1.1",
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0",
     "prop-types": "^15.6.2",
     "react": "16.6.3",
     "react-native": "0.58.6",
