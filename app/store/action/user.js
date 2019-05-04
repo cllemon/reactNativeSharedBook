@@ -1,7 +1,7 @@
 import { GET_USER_INFO } from '../types/user';
-import { login } from '../../common/network/API/account';
-import { asyncSave } from '../../common/plugin/asyncStorage';
-import constance from '../../common/utils/constance';
+import { login } from '../../services/account';
+import { asyncSave } from '../../plugin/asyncStorage';
+import constance from '../../utils/constance';
 
 /**
  * 处理登录操作
