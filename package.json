@@ -3,21 +3,26 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "ios": "react-native run-ios",
+    "ios-8": "react-native run-ios --simulator='iPhone 8'",
+    "android": "react-native run-android",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "epubjs-rn": "^0.1.1",
+    "prop-types": "^15.6.2",
     "react": "16.6.3",
     "react-native": "0.58.6",
+    "react-native-drawer": "^2.5.1",
     "react-native-root-toast": "^3.0.1",
     "react-native-swiper": "^1.5.14",
     "react-native-vector-icons": "^6.1.0",
     "react-navigation": "^2.18.2",
-    "redux-thunk": "^2.3.0",
     "react-redux": "^5.1.1",
     "redux": "^4.0.1",
-    "axios": "^0.18.0",
-    "prop-types": "^15.6.2"
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "babel-core": "^7.0.0-bridge.0",

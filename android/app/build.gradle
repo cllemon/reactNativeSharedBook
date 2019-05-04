@@ -134,6 +134,11 @@ android {
 }
 
 dependencies {
+    implementation project(':rn-fetch-blob')
+    implementation project(':react-native-webview')
+    implementation project(':react-native-orientation')
+    implementation project(':react-native-zip-archive')
+    implementation project(':react-native-static-server')
     implementation project(':react-native-vector-icons')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
