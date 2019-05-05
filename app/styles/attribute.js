@@ -5,6 +5,12 @@ import variable from './variable';
 
 export default {
   padding: function(top = 0, right = 0, bottom = 0, left = 0) {
+    if (arguments.length === 1) {
+      return {
+        paddingVertical: top,
+        paddingHorizontal: top
+      };
+    }
     if (arguments.length === 2) {
       return {
         paddingVertical: top,
@@ -67,5 +73,11 @@ export default {
   ) => ({
     fontSize: size,
     color: color
+  }),
+
+  border: (w = 1, s = 'solid', c = 'rgba(238,238,238,1)') => ({
+    borderWidth: w,
+    borderStyle: s,
+    borderColor: c
   })
 };

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Animated, InteractionManager } from 'react-native';
 import { common, variable } from '../../styles/index';
 import Header from '../../components/header/index';
+import Bookcase from '../../components/bookcase/index';
 import ChickenSoupCard from '../../components/chicken-soup-card/index';
 import Icon from 'react-native-vector-icons/AntDesign';
 
@@ -32,7 +33,7 @@ export default class Desk extends Component {
         />
         <View style={common.mVerticalHorizontal(16, 16)}>
           <ChickenSoupCard />
-          {/*<Bookcase />*/}
+          <Bookcase />
         </View>
       </View>
     );

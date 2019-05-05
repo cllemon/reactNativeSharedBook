@@ -10,6 +10,7 @@ const ChickenSoupCardPropsType = {
   title: PropTypes.string,
   content: PropTypes.string,
   author: PropTypes.string,
+  style: PropTypes.object,
   onPress: PropTypes.function
 };
 
@@ -18,18 +19,19 @@ const ChickenSoupCardDefaultProps = {
   title: '今日导读',
   content: '你不知道，难做的事和应该做的事，往往不是一件事。',
   author: '《天气预报员》',
+  style: {},
   onPress: () =>
     console.log('Please attach a method called onPress to this component')
 };
 
 export default class ChickenSoupCard extends Component {
   render() {
-    const { date, title, content, author, onPress } = this.props;
+    const { date, title, content, author, onPress, style } = this.props;
     return (
       <TouchableOpacity
         onPress={onPress}
         activeOpacity={0.9}
-        style={styles.chicken_soup}
+        style={[styles.chicken_soup, style]}
       >
         <Text style={styles.date}>{date.replace(/-/g, '.')}</Text>
         <View style={styles.title_content}>

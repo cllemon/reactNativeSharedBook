@@ -69,7 +69,7 @@ export default {
   $border_color_base: '#DCDFE6',
   $border_color_light: '#E4E7ED',
   $border_color_lighter: '#EBEEF5',
-  $border_color_extra_light: '#F2F6FC',
+  $border_color_extra_light: 'rgba(238,238,238,1)',
 
   $border_width_base: 1,
   $border_style_base: 'solid',
@@ -100,11 +100,18 @@ export default {
     shadowOpacity: 1,
     shadowRadius: 0
   },
+
   $ios_box_shadow_light_1: {
     shadowColor: 'rgba(191,206,221,0.3)',
     shadowOffset: { height: 0, width: 1 },
     shadowOpacity: 1,
     shadowRadius: 10
+  },
+  $ios_box_shadow_book: {
+    shadowColor: 'rgba(117,127,136,0.3)',
+    shadowOffset: { height: 0, width: 2 },
+    shadowOpacity: 1,
+    shadowRadius: 6
   },
 
   /**
