@@ -5,6 +5,7 @@ import { isFunction, isObject } from 'lodash';
 import Desk from './drawer';
 import Library from '../view/library/index';
 import Search from '../view/search/index';
+import Detail from '../view/detail/index';
 
 const DEFAULT_OPTIONS = {
   header: null,
@@ -26,5 +27,6 @@ const getNavigationOptions = (screen, options = {}) => ({
 export default {
   Desk: getNavigationOptions(Desk),
   Library: getNavigationOptions(Library),
-  Search: getNavigationOptions(Search)
+  Search: getNavigationOptions(Search),
+  Detail: getNavigationOptions(Detail)
 };

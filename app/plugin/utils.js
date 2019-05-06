@@ -7,3 +7,11 @@ export const themes = (color = '#fff') => ({
     }
   }
 });
+
+export const createBatchObject = (count = 0) => {
+  const list = [];
+  for (let i = 0; i < count; i++) {
+    list.push({});
+  }
+  return list;
+};

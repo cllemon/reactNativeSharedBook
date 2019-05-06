@@ -6,10 +6,11 @@ import {
   StyleSheet,
   Image,
   ScrollView,
-  InteractionManager
+  Alert
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { common, variable } from '../../styles/index';
+import { createBatchObject } from '../../plugin/utils';
 import Drag from '../widget/drag';
 
 const A_ROW_BOOK_COUNT = 3;
@@ -17,118 +18,17 @@ const A_ROW_BOOK_COUNT = 3;
 const BookcasePropsType = {
   list: PropTypes.array,
   noneContent: PropTypes.string,
+  navigation: PropTypes.object,
+  onPress: PropTypes.function,
   onLongPress: PropTypes.function
 };
 
 const BookcaseDefaultProps = {
-  list: [
-    {
-      url:
-        'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01JY2f8AVms/a0eGexOoz7aaZd.jpg!s',
-      id: 1
-    },
-    {
-      url:
-        'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01ghYscV33C/TnxjtsHAtAAVI0.jpg!s',
-      id: 2
-    },
-    {
-      url:
-        'http://cover.read.duokan.com/mfsv2/download/s010/p01EtppO1cU7/zLB8PHWW0XKZ4h.jpg!s',
-      id: 33
-    },
-    {
-      url:
-        'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01oPg7ituTp/oxU24Lok7dGmXB.jpg!s',
-      id: 4
-    },
-    {
-      url:
-        'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01Tg7By8Va2/MlN1Wb3CMg08Rc.jpg!s',
-      id: 5
-    },
-    {
-      url:
-        'http://cover.read.duokan.com/mfsv2/download/s010/p013Qw0FnUqw/aceGRZ8ZgjqorV.jpg!s',
-      id: 6
-    },
-    {
-      url:
-        'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01gBJdt6aXg/A3fa52DoLUpzxa.jpg!s',
-      id: 7
-    },
-    {
-      url:
-        'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01JY2f8AVms/a0eGexOoz7aaZd.jpg!s',
-      id: 1
-    },
-    {
-      url:
-        'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01ghYscV33C/TnxjtsHAtAAVI0.jpg!s',
-      id: 2
-    },
-    {
-      url:
-        'http://cover.read.duokan.com/mfsv2/download/s010/p01EtppO1cU7/zLB8PHWW0XKZ4h.jpg!s',
-      id: 3
-    },
-    {
-      url:
-        'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01oPg7ituTp/oxU24Lok7dGmXB.jpg!s',
-      id: 4
-    },
-    {
-      url:
-        'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01Tg7By8Va2/MlN1Wb3CMg08Rc.jpg!s',
-      id: 5
-    },
-    {
-      url:
-        'http://cover.read.duokan.com/mfsv2/download/s010/p013Qw0FnUqw/aceGRZ8ZgjqorV.jpg!s',
-      id: 6
-    },
-    {
-      url:
-        'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01gBJdt6aXg/A3fa52DoLUpzxa.jpg!s',
-      id: 7
-    },
-    {
-      url:
-        'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01JY2f8AVms/a0eGexOoz7aaZd.jpg!s',
-      id: 1
-    },
-    {
-      url:
-        'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01ghYscV33C/TnxjtsHAtAAVI0.jpg!s',
-      id: 2
-    },
-    {
-      url:
-        'http://cover.read.duokan.com/mfsv2/download/s010/p01EtppO1cU7/zLB8PHWW0XKZ4h.jpg!s',
-      id: 3
-    },
-    {
-      url:
-        'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01oPg7ituTp/oxU24Lok7dGmXB.jpg!s',
-      id: 4
-    },
-    {
-      url:
-        'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01Tg7By8Va2/MlN1Wb3CMg08Rc.jpg!s',
-      id: 5
-    },
-    {
-      url:
-        'http://cover.read.duokan.com/mfsv2/download/s010/p013Qw0FnUqw/aceGRZ8ZgjqorV.jpg!s',
-      id: 6
-    },
-    {
-      url:
-        'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01gBJdt6aXg/A3fa52DoLUpzxa.jpg!s',
-      id: 7
-    }
-  ],
+  list: [],
   noneContent: '暂无图书？去书城选一本书，读一读吗？',
+  navigation: {},
+  onPress: () =>
+    console.log('Please attach a method called onPress to this component'),
   onLongPress: () =>
     console.log('Please attach a method called onLongPress to this component')
 };
@@ -136,46 +36,66 @@ const BookcaseDefaultProps = {
 export default class Bookcase extends Component {
   constructor(props) {
     super(props);
+    this.dragInstance = [];
     this.state = {
       books: []
     };
   }
 
-  componentDidMount() {
-    this.integerList();
-  }
-
-  integerList() {
-    const { list } = this.props;
-    const remainder = list.length % A_ROW_BOOK_COUNT;
-    const count = remainder === 0 ? remainder : A_ROW_BOOK_COUNT - remainder;
-    const books = list.concat(this.createBatchObject(count));
-    this.setState({ books });
-  }
-
-  createBatchObject(count = 0) {
-    const list = [];
-    for (let i = 0; i < count; i++) {
-      list.push({});
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.list !== this.props.list) {
+      this.setState({ books: this.integerList(nextProps.list) });
     }
-    return list;
   }
 
-  _renderBook = book => {
+  integerList(list) {
+    const remainder =
+      A_ROW_BOOK_COUNT - (list.length % A_ROW_BOOK_COUNT || A_ROW_BOOK_COUNT);
+    return list.concat(createBatchObject(remainder));
+  }
+
+  _onPress(book, index) {
+    this.props.navigation.navigate('Detail', { book });
+  }
+
+  _onLongPress(book, index) {
+    const _this = this;
+    Alert.alert('提示', '确认移除书架？', [
+      {
+        text: 'OK',
+        onPress: () => {
+          _this.state.books.splice(index, 1);
+          _this.setState({ books: _this.integerList(_this.state.books) });
+          console.log(_this.state.books);
+        }
+      }
+    ]);
+    /*---
+        拖拽有 bug - 暂无法解决
+        const Drag = this.dragInstance[index];
+        Drag.setPanHandlers();
+      ---*/
+  }
+
+  _renderBook = (book, index) => {
     return (
-      <View style={styles.book} key={`book_${book.id}_${Math.random()}`}>
+      <View style={styles.book} key={`book_${index}_${Math.random()}`}>
         {book.url && (
-          <Drag title={book.id}>
-            <TouchableOpacity
-              style={styles.img_wraper}
-              activeOpacity={0.8}
-              onLongPress={() => {
-                book && this.props.onLongPress(book);
-              }}
-            >
-              <Image style={styles.img} source={{ uri: book.url }} />
-            </TouchableOpacity>
-          </Drag>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => {
+              book && this._onPress(book, index);
+            }}
+            onLongPress={() => {
+              book && this._onLongPress(book, index);
+            }}
+          >
+            <Drag ref={_ref => (this.dragInstance[index] = _ref)} key={index}>
+              <View style={styles.img_wraper}>
+                <Image style={styles.img} source={{ uri: book.url }} />
+              </View>
+            </Drag>
+          </TouchableOpacity>
         )}
         <View style={[styles.shadow_side, !book.url && { marginTop: 114 }]} />
         <View style={styles.glossy_side} />
@@ -191,11 +111,11 @@ export default class Bookcase extends Component {
     const { books } = this.state;
     return (
       <View style={styles.scroll}>
-        <ScrollView scrollEnabled={false}>
+        <ScrollView>
           <View style={styles.bookcase}>
             {books.length
-              ? books.map(book => {
-                  return this._renderBook(book);
+              ? books.map((book, index) => {
+                  return this._renderBook(book, index);
                 })
               : this._renderNoneBook()}
           </View>
@@ -215,7 +135,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     marginTop: 24
-    // paddingBottom: 10,
   },
   book: {
     ...common.screenWidth(0.297),
@@ -223,12 +142,12 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   img_wraper: {
-    ...common.mVerticalHorizontal(0, 28),
-    ...common.margin(0, 28, 0, 28),
     ...common.border(),
     ...common.shadow(2, variable.$ios_box_shadow_book),
-    transform: [{ translateY: 2 }],
-    zIndex: variable.$zIndex_normal
+    ...common.mVerticalHorizontal(0, 28),
+    ...common.margin(0, 28, 0, 28),
+    transform: [{ translateY: 2 }]
+    // zIndex: variable.$zIndex_normal
   },
   img: {
     ...common.screenWidth(0.21),

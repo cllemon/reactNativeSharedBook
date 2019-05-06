@@ -49,7 +49,7 @@ export default class Header extends Component {
         </TouchableOpacity>
       );
     }
-    return null;
+    return <View />;
   };
 
   render() {
