@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 
-class Search extends Component {
+class Setting extends Component {
   render() {
     return (
       <View>
-        <Text>Search</Text>
+        <Text>Setting</Text>
       </View>
     );
   }
 }
 
-export default Search;
+export default Setting;
