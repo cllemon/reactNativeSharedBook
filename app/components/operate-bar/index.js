@@ -13,8 +13,8 @@ const OperateBarPropsType = {
 
 const OperateBarDefaultProps = {
   label: 'label',
-  leftIcon: <Icon name='barschart' style={common.fontSizeColor()} />,
-  rightIcon: <Icon name='right' style={common.fontSizeColor()} />,
+  leftIcon: <Icon name='barschart' style={common.fontColorSize()} />,
+  rightIcon: <Icon name='right' style={common.fontColorSize()} />,
   onPress: () =>
     console.log('Please attach a method called onPress to this component')
 };

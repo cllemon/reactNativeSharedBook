@@ -3,9 +3,14 @@
  */
 import { isFunction, isObject } from 'lodash';
 import Desk from './drawer';
-import Library from '../view/library/index';
-import Search from '../view/search/index';
 import Detail from '../view/detail/index';
+import Library from '../view/library/index';
+import Login from '../view/login/index';
+import PersonalInformation from '../view/personal-information/index';
+import ReadingRecord from '../view/reading-record/index';
+import Search from '../view/search/index';
+import Setting from '../view/setting/index';
+import Share from '../view/share/index';
 
 const DEFAULT_OPTIONS = {
   header: null,
@@ -26,7 +31,12 @@ const getNavigationOptions = (screen, options = {}) => ({
 
 export default {
   Desk: getNavigationOptions(Desk),
+  Detail: getNavigationOptions(Detail),
   Library: getNavigationOptions(Library),
+  Login: getNavigationOptions(Login),
+  PersonalInformation: getNavigationOptions(PersonalInformation),
+  ReadingRecord: getNavigationOptions(ReadingRecord),
   Search: getNavigationOptions(Search),
-  Detail: getNavigationOptions(Detail)
+  Setting: getNavigationOptions(Setting),
+  Share: getNavigationOptions(Share)
 };

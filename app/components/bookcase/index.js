@@ -4,97 +4,127 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  Image,
+  Alert,
   ScrollView,
-  Alert
+  ImageBackground
 } from 'react-native';
-import PropTypes from 'prop-types';
 import { common, variable } from '../../styles/index';
 import { createBatchObject } from '../../plugin/utils';
-import Drag from '../widget/drag';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 const A_ROW_BOOK_COUNT = 3;
-
-const BookcasePropsType = {
-  list: PropTypes.array,
-  noneContent: PropTypes.string,
-  navigation: PropTypes.object,
-  onPress: PropTypes.function,
-  onLongPress: PropTypes.function
-};
-
-const BookcaseDefaultProps = {
-  list: [],
-  noneContent: '暂无图书？去书城选一本书，读一读吗？',
-  navigation: {},
-  onPress: () =>
-    console.log('Please attach a method called onPress to this component'),
-  onLongPress: () =>
-    console.log('Please attach a method called onLongPress to this component')
-};
 
 export default class Bookcase extends Component {
   constructor(props) {
     super(props);
-    this.dragInstance = [];
     this.state = {
+      edit: false,
       books: []
     };
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    if (nextProps.list !== this.props.list) {
-      this.setState({ books: this.integerList(nextProps.list) });
-    }
+  componentDidMount() {
+    this.getBooks();
   }
 
+  /**
+   * 获取图书列表
+   */
+  getBooks = () => {
+    // 发请求
+    this.setState({ books: this.integerList(mock) });
+  };
+
+  /**
+   * 拼接数组
+   */
   integerList(list) {
     const remainder =
       A_ROW_BOOK_COUNT - (list.length % A_ROW_BOOK_COUNT || A_ROW_BOOK_COUNT);
     return list.concat(createBatchObject(remainder));
   }
 
-  _onPress(book, index) {
-    this.props.navigation.navigate('Detail', { book });
+  /**
+   * 响应点按查看图书
+   *
+   * @param {*} book
+   * @memberof Bookcase
+   */
+  _onPress(book) {
+    if (book && !this.state.edit) {
+      this.props.navigation.navigate('Detail', { book });
+    }
   }
 
-  _onLongPress(book, index) {
-    const _this = this;
-    Alert.alert('提示', '确认移除书架？', [
+  /**
+   * 响应长按 删除
+   * tips:
+   *      拖拽有 bug - 暂无法解决
+   *      const Drag = this.dragInstance[index];
+   *      Drag.setPanHandlers();
+   */
+  _onLongPress = () => {
+    this.setState({ edit: true });
+    setTimeout(() => {
+      this.setState({ edit: false });
+    }, 10000);
+  };
+
+  /**
+   * 移除书架
+   */
+  _onDelete = (book, index) => {
+    // 发请求调删除接口 async this.deleteCollection
+    // 刷新列表 async this.getBooks
+    this.setState({ edit: false });
+    console.log(`移除书架成功${book},${index}`);
+  };
+
+  /**
+   * 添加到书架
+   */
+  _onAdd = () => {
+    const isLogin = false;
+    if (isLogin) {
+      return this.props.navigation.navigate('Library');
+    }
+    Alert.alert('提示', '暂未登录，无法添加书籍，去登录？', [
       {
-        text: 'OK',
-        onPress: () => {
-          _this.state.books.splice(index, 1);
-          _this.setState({ books: _this.integerList(_this.state.books) });
-          console.log(_this.state.books);
-        }
-      }
+        text: '不了',
+        style: 'cancel'
+      },
+      { text: '去登录', onPress: () => this.props.navigation.navigate('Login') }
     ]);
-    /*---
-        拖拽有 bug - 暂无法解决
-        const Drag = this.dragInstance[index];
-        Drag.setPanHandlers();
-      ---*/
-  }
+  };
 
+  /**
+   * 渲染每一本书
+   */
   _renderBook = (book, index) => {
     return (
       <View style={styles.book} key={`book_${index}_${Math.random()}`}>
         {book.url && (
           <TouchableOpacity
             activeOpacity={0.8}
+            onLongPress={this._onLongPress}
             onPress={() => {
-              book && this._onPress(book, index);
-            }}
-            onLongPress={() => {
-              book && this._onLongPress(book, index);
+              this._onPress(book);
             }}
           >
-            <Drag ref={_ref => (this.dragInstance[index] = _ref)} key={index}>
-              <View style={styles.img_wraper}>
-                <Image style={styles.img} source={{ uri: book.url }} />
-              </View>
-            </Drag>
+            <View style={styles.img_wraper}>
+              <ImageBackground style={styles.img} source={{ uri: book.url }}>
+                {this.state.edit && (
+                  <TouchableOpacity
+                    style={styles.delete}
+                    onPress={() => {
+                      this._onDelete(book, index);
+                    }}
+                  >
+                    <Icon name='closecircle' style={common.fontColorSize()} />
+                  </TouchableOpacity>
+                )}
+              </ImageBackground>
+            </View>
           </TouchableOpacity>
         )}
         <View style={[styles.shadow_side, !book.url && { marginTop: 114 }]} />
@@ -103,23 +133,44 @@ export default class Bookcase extends Component {
     );
   };
 
-  _renderNoneBook = () => {
-    return <Text>{this.props.noneContent}</Text>;
+  /**
+   * 渲染滚动区域内容
+   */
+  _scrollContent = books => {
+    if (books && books.length) {
+      return (
+        <ScrollView>
+          <View style={styles.bookcase}>
+            {books.map((book, index) => {
+              return this._renderBook(book, index);
+            })}
+          </View>
+        </ScrollView>
+      );
+    }
+    return null;
+  };
+
+  /**
+   * 渲染”无内容“显示
+   */
+  _renderNoneBook = books => {
+    if (!books.length) {
+      return (
+        <Text onPress={this._onAdd}>
+          <Icon name='plus' style={common.fontColorSize('#eee', 100)} />
+        </Text>
+      );
+    }
+    return null;
   };
 
   render() {
     const { books } = this.state;
     return (
       <View style={styles.scroll}>
-        <ScrollView>
-          <View style={styles.bookcase}>
-            {books.length
-              ? books.map((book, index) => {
-                  return this._renderBook(book, index);
-                })
-              : this._renderNoneBook()}
-          </View>
-        </ScrollView>
+        {this._scrollContent(books)}
+        {this._renderNoneBook(books)}
       </View>
     );
   }
@@ -128,7 +179,9 @@ export default class Bookcase extends Component {
 const styles = StyleSheet.create({
   scroll: {
     height: common.screenHeight()['height'] - 220,
-    overflow: 'hidden'
+    overflow: 'hidden',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   bookcase: {
     flex: 1,
@@ -146,8 +199,8 @@ const styles = StyleSheet.create({
     ...common.shadow(2, variable.$ios_box_shadow_book),
     ...common.mVerticalHorizontal(0, 28),
     ...common.margin(0, 28, 0, 28),
-    transform: [{ translateY: 2 }]
-    // zIndex: variable.$zIndex_normal
+    transform: [{ translateY: 2 }],
+    position: 'relative'
   },
   img: {
     ...common.screenWidth(0.21),
@@ -165,9 +218,114 @@ const styles = StyleSheet.create({
     ...common.bgc('#fff'),
     ...common.shadow(0, variable.$ios_box_shadow_light_1),
     marginLeft: -4
+  },
+  delete: {
+    position: 'absolute',
+    top: -8,
+    left: -12,
+    opacity: 0.7
   }
 });
 
-PropTypes.Bookcase = BookcasePropsType;
-
-Bookcase.defaultProps = BookcaseDefaultProps;
+const mock = [
+  {
+    url:
+      'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01ghYscV33C/TnxjtsHAtAAVI0.jpg!s',
+    id: 2
+  },
+  {
+    url:
+      'http://cover.read.duokan.com/mfsv2/download/s010/p01EtppO1cU7/zLB8PHWW0XKZ4h.jpg!s',
+    id: 33
+  },
+  {
+    url:
+      'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01oPg7ituTp/oxU24Lok7dGmXB.jpg!s',
+    id: 4
+  },
+  {
+    url:
+      'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01Tg7By8Va2/MlN1Wb3CMg08Rc.jpg!s',
+    id: 5
+  },
+  {
+    url:
+      'http://cover.read.duokan.com/mfsv2/download/s010/p013Qw0FnUqw/aceGRZ8ZgjqorV.jpg!s',
+    id: 6
+  },
+  {
+    url:
+      'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01gBJdt6aXg/A3fa52DoLUpzxa.jpg!s',
+    id: 7
+  },
+  {
+    url:
+      'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01JY2f8AVms/a0eGexOoz7aaZd.jpg!s',
+    id: 1
+  },
+  {
+    url:
+      'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01ghYscV33C/TnxjtsHAtAAVI0.jpg!s',
+    id: 2
+  },
+  {
+    url:
+      'http://cover.read.duokan.com/mfsv2/download/s010/p01EtppO1cU7/zLB8PHWW0XKZ4h.jpg!s',
+    id: 3
+  },
+  {
+    url:
+      'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01oPg7ituTp/oxU24Lok7dGmXB.jpg!s',
+    id: 4
+  },
+  {
+    url:
+      'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01Tg7By8Va2/MlN1Wb3CMg08Rc.jpg!s',
+    id: 5
+  },
+  {
+    url:
+      'http://cover.read.duokan.com/mfsv2/download/s010/p013Qw0FnUqw/aceGRZ8ZgjqorV.jpg!s',
+    id: 6
+  },
+  {
+    url:
+      'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01gBJdt6aXg/A3fa52DoLUpzxa.jpg!s',
+    id: 7
+  },
+  {
+    url:
+      'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01JY2f8AVms/a0eGexOoz7aaZd.jpg!s',
+    id: 1
+  },
+  {
+    url:
+      'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01ghYscV33C/TnxjtsHAtAAVI0.jpg!s',
+    id: 2
+  },
+  {
+    url:
+      'http://cover.read.duokan.com/mfsv2/download/s010/p01EtppO1cU7/zLB8PHWW0XKZ4h.jpg!s',
+    id: 3
+  },
+  {
+    url:
+      'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01oPg7ituTp/oxU24Lok7dGmXB.jpg!s',
+    id: 4
+  },
+  {
+    url:
+      'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01Tg7By8Va2/MlN1Wb3CMg08Rc.jpg!s',
+    id: 5
+  },
+  {
+    url:
+      'http://cover.read.duokan.com/mfsv2/download/s010/p013Qw0FnUqw/aceGRZ8ZgjqorV.jpg!s',
+    id: 6
+  },
+  {
+    url:
+      'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01gBJdt6aXg/A3fa52DoLUpzxa.jpg!s',
+    id: 7
+  }
+];

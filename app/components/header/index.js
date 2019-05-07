@@ -14,7 +14,7 @@ const HeaderPropsType = {
 
 const HeaderDefaultProps = {
   title: '',
-  left: <Icon name='arrowleft' style={common.fontSizeColor()} />,
+  left: <Icon name='arrowleft' style={common.fontColorSize()} />,
   right: null,
   onLeftPress: () =>
     console.log('Please attach a method called onLeftPress to this component'),

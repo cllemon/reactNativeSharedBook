@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     position: 'relative'
   },
   date: {
-    ...common.fontSizeColor(
+    ...common.fontColorSize(
       variable.$font_color_medium_black,
       variable.$font_size_large
     ),
@@ -72,14 +72,14 @@ const styles = StyleSheet.create({
     ...common.layout_flex('space-between')
   },
   quotes: {
-    ...common.fontSizeColor('#BFCEDD', 20),
+    ...common.fontColorSize('#BFCEDD', 20),
     marginTop: 3
   },
   title: {
-    ...common.fontSizeColor('#697B84', 12)
+    ...common.fontColorSize('#697B84', 12)
   },
   content: {
-    ...common.fontSizeColor(
+    ...common.fontColorSize(
       variable.$font_color_medium_black,
       variable.$font_size_large
     ),
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     ...common.padding(0, 29, 12, 26)
   },
   author: {
-    ...common.fontSizeColor('#C8D0D8', 12),
+    ...common.fontColorSize('#C8D0D8', 12),
     ...common.margin(0, 10, 16),
     textAlign: 'right'
   }
