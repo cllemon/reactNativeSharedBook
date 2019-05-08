@@ -6,7 +6,8 @@ import {
   StyleSheet,
   Alert,
   ScrollView,
-  ImageBackground
+  ImageBackground,
+  Platform
 } from 'react-native';
 import { common, variable } from '../../styles/index';
 import { createBatchObject } from '../../plugin/utils';
@@ -207,7 +208,7 @@ const styles = StyleSheet.create({
     ...common.screenHeight(112)
   },
   shadow_side: {
-    ...common.screenWidth(0.297),
+    ...common.screenWidth(0.3),
     ...common.screenHeight(6),
     ...common.bgc('rgba(245,245,249,1)'),
     transform: [{ skewX: '-45deg' }]
@@ -217,7 +218,12 @@ const styles = StyleSheet.create({
     ...common.screenHeight(8),
     ...common.bgc('#fff'),
     ...common.shadow(0, variable.$ios_box_shadow_light_1),
-    marginLeft: -4
+    ...Platform.select({
+      android: {
+        ...common.border()
+      }
+    }),
+    paddingLeft: -4
   },
   delete: {
     position: 'absolute',

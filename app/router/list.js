@@ -11,6 +11,8 @@ import ReadingRecord from '../view/reading-record/index';
 import Search from '../view/search/index';
 import Setting from '../view/setting/index';
 import Share from '../view/share/index';
+import List from '../view/list/index';
+import Register from '../view/register/index';
 
 const DEFAULT_OPTIONS = {
   header: null,
@@ -38,5 +40,7 @@ export default {
   ReadingRecord: getNavigationOptions(ReadingRecord),
   Search: getNavigationOptions(Search),
   Setting: getNavigationOptions(Setting),
-  Share: getNavigationOptions(Share)
+  Share: getNavigationOptions(Share),
+  List: getNavigationOptions(List),
+  Register: getNavigationOptions(Register)
 };

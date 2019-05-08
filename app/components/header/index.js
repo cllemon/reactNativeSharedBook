@@ -9,15 +9,15 @@ const HeaderPropsType = {
   left: PropTypes.children,
   right: PropTypes.children,
   onLeftPress: PropTypes.function,
-  onRightPress: PropTypes.function
+  onRightPress: PropTypes.function,
+  navigation: PropTypes.object
 };
 
 const HeaderDefaultProps = {
   title: '',
   left: <Icon name='arrowleft' style={common.fontColorSize()} />,
   right: null,
-  onLeftPress: () =>
-    console.log('Please attach a method called onLeftPress to this component'),
+  onLeftPress: null,
   onRightPress: () =>
     console.log('Please attach a method called onRightPress to this component')
 };
@@ -33,9 +33,16 @@ const HEADER_STYLE = Object.assign(
 );
 
 export default class Header extends Component {
+  _onLeftPress = () => {
+    if (this.props.onLeftPress) {
+      return this.props.onLeftPress();
+    }
+    this.props.navigation.goBack();
+  };
+
   _renderLeft = () => {
     return (
-      <TouchableOpacity onPress={this.props.onLeftPress} activeOpacity={0.8}>
+      <TouchableOpacity onPress={this._onLeftPress} activeOpacity={0.8}>
         {this.props.left}
       </TouchableOpacity>
     );
