@@ -11,8 +11,8 @@ const formItemTips = () =>
   );
 
 const isValidator = props => {
-  const { rules, required, prop } = props;
-  if (rules[prop] && rules[prop].required) {
+  const { rules, prop } = props;
+  if (rules[prop] && rules[prop].length && rules[prop][0].required) {
     return true;
   }
   return false;
@@ -21,31 +21,17 @@ const isValidator = props => {
 /** textInput 特殊处理 **/
 
 const TEXT_INPUT_BASIC_STYLE = {
-  width: 200,
-  height: 40,
-  borderColor: '#dcdfe6',
-  borderWidth: 1,
-  borderRadius: 4,
-  backgroundColor: '#fff',
-  paddingHorizontal: 15
+  minWidth: 200,
+  maxWidth: 260,
+  height: 30,
+  textAlignVertical: 'center',
+  fontSize: 16,
+  padding: 0
 };
 
-const TEXT_INPUT_BASIC_STYLE_ACTIVE = {
-  borderColor: '#409eff',
-  borderWidth: 1,
-  borderRadius: 4
-};
-
-const TEXT_INPUT_BASIC_STYLE_ERRORS = {
-  borderColor: '#f56c6c',
-  borderWidth: 1,
-  borderRadius: 4
-};
-
-const TEXT_INPUT_BASIC_STYLE_PASS = {
-  borderColor: '#67c23a',
-  borderWidth: 1,
-  borderRadius: 4
+const SLIDER_SWITCH_BASIC_STYLE = {
+  minWidth: 200,
+  minHeight: 6
 };
 
 const outerMethod = method => {
@@ -55,30 +41,52 @@ const outerMethod = method => {
 const mergeTextInput = (children, _this) => {
   const { prop, model, _setValue } = _this.props;
   const _props = {};
+  _props.style = Object.assign({}, TEXT_INPUT_BASIC_STYLE, {
+    ...children.props.style
+  });
+  // 设置默认值
   _props.defaultValue = model[prop];
+  // 同步绑定值
   _props.onChangeText = text => {
     outerMethod(children.props.onChangeText);
     _setValue({ prop, value: text });
   };
+  // 失焦 触发校验
   _props.onBlur = () => {
-    _this.setState({
-      border_active: model[prop] ? TEXT_INPUT_BASIC_STYLE_PASS : {}
-    });
-    _this.validator(_this.props);
+    _this.validate(_this.props);
     outerMethod(children.props.onBlur);
   };
-  _props.onFocus = () => {
-    outerMethod(children.props.onBlur);
-    if (!Object.keys(_this.state.border_active).length) {
-      _this.setState({ border_active: TEXT_INPUT_BASIC_STYLE_ACTIVE });
-    }
-  };
-  if (!children.props.style) {
-    _props.style = TEXT_INPUT_BASIC_STYLE;
-  }
   if (!children.props.clearButtonMode) {
     _props.clearButtonMode = 'while-editing';
   }
+  return _props;
+};
+
+const mergeSlider = (children, _this) => {
+  const { prop, model, _setValue } = _this.props;
+  const _props = {};
+  _props.value = model[prop];
+  _props.style = Object.assign(SLIDER_SWITCH_BASIC_STYLE, {
+    ...children.props.style
+  });
+  _props.onValueChange = val => {
+    _setValue({ prop, value: val });
+    _this.validate(_this.props);
+    outerMethod(children.props.onValueChange);
+  };
+  return _props;
+};
+
+const mergeSwitch = (children, _this) => {
+  const { prop, model, _setValue } = _this.props;
+  const _props = {};
+  _props.value = model[prop];
+  _props.onValueChange = val => {
+    _setValue({ prop, value: val });
+    _this.validate(_this.props);
+    outerMethod(children.props.onValueChange);
+    _this.setState({ switchValue: val }); // 这段代码兼容 Switch 的受控特性，这特么垃圾代码, 强制触发组件重新渲染
+  };
   return _props;
 };
 
@@ -89,6 +97,24 @@ export default {
   isValidator,
   formItemTips,
   mergeTextInput,
-  TEXT_INPUT_BASIC_STYLE_ERRORS,
-  TEXT_INPUT_BASIC_STYLE_PASS
+  mergeSlider,
+  mergeSwitch
+};
+
+/**
+ * 这里处理的很难 因为组件间的规范很难定
+ */
+const map = {
+  DatePickerAndroid: '',
+  DatePickerIOS: 'onDateChange',
+  date: '当前被选中时间',
+
+  Picker: 'onValueChange', // PickerIOS 一样
+  selectedValue: '默认选中的值',
+
+  slider: 'onValueChange', // 用户拖动滑块的过程中不断调用此回调
+  value: '滑块初始化值',
+
+  Switch: 'onValueChange',
+  value: '默认值'
 };

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import _ from './mixins';
-import Icon from 'react-native-vector-icons/AntDesign';
 
 const FormPropsType = {
   style: PropTypes.object,
@@ -20,13 +19,14 @@ const FormDefaultProps = {
   rules: {},
   labelPosition: 'right',
   labelSuffix: '',
-  labelWidth: 90,
+  labelWidth: 100,
   hideRequiredAsterisk: false
 };
 
 export default class Form extends Component {
   constructor(props) {
     super(props);
+    this._validateResult = [];
     this.state = {
       model: {}
     };
@@ -58,6 +58,28 @@ export default class Form extends Component {
     }
   };
 
+  consumerFormItemRefs = formItemRef => {
+    this._validateResult.push(formItemRef);
+  };
+
+  validate = callback => {
+    this._validateResult.forEach(async item => {
+      await item.validate(item.props);
+    });
+    setTimeout(() => {
+      const result = this._validateResult.every(item => {
+        if (!item.state.errors) {
+          return true;
+        }
+      });
+      callback(result, this.state.model);
+    }, 0);
+  };
+
+  resetFields = () => {
+    this.setState({ model: {} });
+  };
+
   _renderFormItem = children =>
     React.Children.map(children, child =>
       React.cloneElement(child, {
@@ -67,7 +89,8 @@ export default class Form extends Component {
         form_labelPosition: this.props.labelPosition,
         form_labelWidth: this.props.labelWidth,
         form_labelSuffix: this.props.labelSuffix,
-        hideRequiredAsterisk: this.props.hideRequiredAsterisk
+        hideRequiredAsterisk: this.props.hideRequiredAsterisk,
+        consumerFormItemRefs: this.consumerFormItemRefs
       })
     );
 
