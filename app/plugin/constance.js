@@ -2,7 +2,8 @@ import moment from 'moment';
 
 export default {
   YMD: val => moment(val).format('YYYY-MM-DD'),
-  YMDHM: val => moment(val).format('YYYY-MM-DD HH:mm')
+  YMDHM: val => moment(val).format('YYYY-MM-DD HH:mm'),
+  DEFAULT_HEAD_URL: require('../assets/images/default_head.png')
 };
 
 // const enume = {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-import Header from '../../components/header/index';
+import Header from '../../components/widget/Header';
 import { common } from '../../styles/index';
 import Drag from '../../components/widget/Drag';
 

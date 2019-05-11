@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { common } from '../../styles/index';
 import { MINE_OPERATE_BAR } from '../../plugin/enume';
+import constance from '../../plugin/constance';
 import Icon from 'react-native-vector-icons/AntDesign';
-
-const DEFAULT_HEAD_URL = require('../../assets/images/default_head.png');
-
 class Mine extends Component {
   constructor(props) {
     super(props);
@@ -54,7 +52,7 @@ class Mine extends Component {
             source={
               this.state.userInfo.avatar
                 ? { uri: this.state.userInfo.avatar }
-                : DEFAULT_HEAD_URL
+                : constance.DEFAULT_HEAD_URL
             }
             style={styles.avatar_img}
           />

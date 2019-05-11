@@ -53,3 +53,18 @@ export const MINE_OPERATE_BAR = [
     // iconColor: '#38DAFF'
   }
 ];
+
+export const THIRD_AUTH_LOGIN = [
+  {
+    label: '微信',
+    value: 'wechat'
+  },
+  {
+    label: '新浪微博',
+    value: 'weibo'
+  },
+  {
+    label: 'QQ',
+    value: 'QQ'
+  }
+];

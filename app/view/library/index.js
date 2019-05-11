@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { common } from '../../styles/index';
-import Header from '../../components/header/index';
+import Header from '../../components/widget/Header';
 import Recommended from '../../components/recommended/index';
 import Classification from '../../components/classification/index';
 import SwiperImage from '../../components/widget/SwiperImage';

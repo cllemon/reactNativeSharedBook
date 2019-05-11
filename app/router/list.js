@@ -13,6 +13,7 @@ import Setting from '../view/setting/index';
 import Share from '../view/share/index';
 import List from '../view/list/index';
 import Register from '../view/register/index';
+import ResetPassword from '../view/reset-password/index';
 
 const DEFAULT_OPTIONS = {
   header: null,
@@ -42,5 +43,6 @@ export default {
   Setting: getNavigationOptions(Setting),
   Share: getNavigationOptions(Share),
   List: getNavigationOptions(List),
-  Register: getNavigationOptions(Register)
+  Register: getNavigationOptions(Register),
+  ResetPassword: getNavigationOptions(ResetPassword)
 };

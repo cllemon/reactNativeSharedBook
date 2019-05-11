@@ -66,7 +66,7 @@ const mergeSlider = (children, _this) => {
   const { prop, model, _setValue } = _this.props;
   const _props = {};
   _props.value = model[prop];
-  _props.style = Object.assign(SLIDER_SWITCH_BASIC_STYLE, {
+  _props.style = Object.assign({}, SLIDER_SWITCH_BASIC_STYLE, {
     ...children.props.style
   });
   _props.onValueChange = val => {
