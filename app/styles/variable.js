@@ -118,8 +118,8 @@ export default {
    * z-index
    */
   $zIndex_normal: 1,
-  $$zIndex_top: 1000,
-  $zIndex_popper: 2000,
+  $zIndex_header: 2000,
+  $zIndex_loading: 3000,
 
   /**
    * Transition

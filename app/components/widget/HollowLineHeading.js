@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
-import { common } from '../../styles/index';
+import { common, variable } from '../../styles/index';
 
 const HollowLineHeadingPropsType = {
   title: PropTypes.string
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     ...common.bgc('#EEEEEE')
   },
   title: {
-    zIndex: 1,
+    zIndex: variable.$zIndex_normal,
     textAlign: 'center',
     color: '#999999',
     fontSize: 12,

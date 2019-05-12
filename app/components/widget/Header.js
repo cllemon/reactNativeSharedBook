@@ -61,7 +61,7 @@ export default class Header extends Component {
 
   render() {
     return (
-      <View style={{ zIndex: 10000 }}>
+      <View style={{ zIndex: variable.$zIndex_header }}>
         <StatusBar
           hidden={false}
           backgroundColor={variable.$main_color_white}

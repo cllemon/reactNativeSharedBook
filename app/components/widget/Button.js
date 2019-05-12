@@ -9,8 +9,7 @@ const ButtonPropsType = {
   height: PropTypes.number,
   loading: PropTypes.bool,
   disabled: PropTypes.bool,
-  touchStyle: PropTypes.object,
-  titleStyle: PropTypes.object,
+  style: PropTypes.object,
   onPress: PropTypes.func
 };
 
@@ -20,15 +19,17 @@ const ButtonDefaultProps = {
   height: 44,
   loading: false,
   disabled: false,
-  titleStyle: {}, // title样式
-  touchStyle: {}, // touch样式
+  style: {
+    title: {}, // title样式
+    touch: {} // touch样式
+  },
   onPress: () =>
     console.log('Please attach a method called onPress to this component')
 };
 
 export default class Button extends Component {
   BUTTON_STYLE = () => {
-    const { loading, height, width } = this.props;
+    const { height, width } = this.props;
     return {
       height,
       width,
@@ -48,17 +49,23 @@ export default class Button extends Component {
   };
 
   render() {
-    const { loading, title, disabled } = this.props;
-
+    const { loading, title, disabled, style } = this.props;
     return (
       <TouchableOpacity
-        style={this.BUTTON_STYLE()}
+        style={[this.BUTTON_STYLE(), style.touch]}
         onPress={this._onPress}
         activeOpacity={0.8}
         disabled={disabled}
       >
         {loading && <ActivityIndicator size='small' color='#fff' />}
-        <Text style={{ color: '#fff', fontSize: 16, marginLeft: 10 }}>
+        <Text
+          style={{
+            color: '#fff',
+            fontSize: 16,
+            marginLeft: 10,
+            ...style.title
+          }}
+        >
           {title}
         </Text>
       </TouchableOpacity>

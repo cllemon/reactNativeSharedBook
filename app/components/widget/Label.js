@@ -39,7 +39,7 @@ export default class Label extends Component {
     return {
       width: this.props.labelWidth,
       height: column ? 24 : this.props.labelHeight,
-      // lineHeight: column ? 1 : 16,
+      lineHeight: column ? 24 : 32,
       textAlign: column ? 'left' : this.props.labelPosition,
       textAlignVertical: 'center',
       color: '#333',
