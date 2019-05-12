@@ -8,11 +8,14 @@ import {
   Alert
 } from 'react-native';
 import { common } from '../../styles/index';
+import { CANMERO_OPERATES } from '../../plugin/enume';
 import constance from '../../plugin/constance';
+import ActionSheet from '../../components/widget/ActionSheet';
 import Header from '../../components/widget/Header';
 import Input from '../../components/widget/input/index';
 import Label from '../../components/widget/Label';
 import Button from '../../components/widget/Button';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 class Register extends Component {
   constructor(props) {
@@ -42,6 +45,10 @@ class Register extends Component {
         }
       }
     ]);
+  };
+
+  onActionSheet = index => {
+    console.log(index, '===////');
   };
 
   _renderForm = () => {
@@ -94,7 +101,7 @@ class Register extends Component {
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => {
-              console.log('查看大图 - actionSheet');
+              this.ActionSheet.setVisible();
             }}
             style={styles.avatar}
           >
@@ -106,10 +113,19 @@ class Register extends Component {
                   : constance.DEFAULT_HEAD_URL
               }
             />
+            <View style={styles.avatar_camero}>
+              <Icon name='camerao' style={common.fontColorSize('#fff', 18)} />
+            </View>
           </TouchableOpacity>
+
           {this._renderForm()}
           <Button loading={this.state.loading} onPress={this.onSubmit} />
         </KeyboardAvoidingView>
+        <ActionSheet
+          list={CANMERO_OPERATES}
+          ref={_ref => (this.ActionSheet = _ref)}
+          onPress={this.onActionSheet}
+        />
       </View>
     );
   }
@@ -134,9 +150,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: common.screenHeight(44 / 812)['height']
   },
+  avatar_camero: {
+    ...common.screenHeight(28),
+    ...common.screenWidth(28),
+    ...common.bgc('#000'),
+    marginTop: common.screenWidth(-28 / 375)['width'],
+    marginLeft: common.screenWidth(60 / 375)['width'],
+    borderRadius: common.screenWidth(14 / 375)['width'],
+    justifyContent: 'center',
+    alignItems: 'center',
+    opacity: 0.6
+  },
   avatar_img: {
     ...common.screenWidth(0.235),
-    height: common.screenWidth(0.235)['width']
+    height: common.screenWidth(0.235)['width'],
+    borderRadius: common.screenWidth(0.1175)['width']
   }
 });
 

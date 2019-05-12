@@ -91,7 +91,8 @@ const styles = StyleSheet.create({
   },
   avatar_img: {
     ...common.screenWidth(0.171),
-    height: common.screenWidth(0.17)['width']
+    height: common.screenWidth(0.171)['width'],
+    borderRadius: common.screenWidth(0.0855)['width']
   },
   nick_name: {
     ...common.screenWidth(0.27),
