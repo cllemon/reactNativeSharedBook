@@ -4,7 +4,6 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  Alert,
   ScrollView,
   ImageBackground,
   Platform
@@ -25,7 +24,7 @@ export default class Bookcase extends Component {
   }
 
   componentDidMount() {
-    this.getBooks();
+    // this.getBooks();
   }
 
   /**
@@ -52,6 +51,7 @@ export default class Bookcase extends Component {
    * @memberof Bookcase
    */
   _onPress(book) {
+    // 直接去阅读
     if (book && !this.state.edit) {
       this.props.navigation.navigate('Detail', { book });
     }
@@ -79,23 +79,6 @@ export default class Bookcase extends Component {
     // 刷新列表 async this.getBooks
     this.setState({ edit: false });
     console.log(`移除书架成功${book},${index}`);
-  };
-
-  /**
-   * 添加到书架
-   */
-  _onAdd = () => {
-    const isLogin = false;
-    if (isLogin) {
-      return this.props.navigation.navigate('Library');
-    }
-    Alert.alert('提示', '暂未登录，无法添加书籍，去登录？', [
-      {
-        text: '不了',
-        style: 'cancel'
-      },
-      { text: '去登录', onPress: () => this.props.navigation.navigate('Login') }
-    ]);
   };
 
   /**
@@ -158,9 +141,22 @@ export default class Bookcase extends Component {
   _renderNoneBook = books => {
     if (!books.length) {
       return (
-        <Text onPress={this._onAdd}>
-          <Icon name='plus' style={common.fontColorSize('#eee', 100)} />
-        </Text>
+        <TouchableOpacity
+          style={{ flexDirection: 'column', alignItems: 'center' }}
+          onPress={() => {
+            this.props.navigation.navigate('Library');
+          }}
+          activeOpacity={0.8}
+        >
+          {/**
+            <Text onPress={this._onAdd}>
+              <Icon name='plus' style={common.fontColorSize('#eee', 100)} />
+            </Text>
+          */}
+          <Text style={common.fontColorSize('#999', 12)}>
+            你的书架暂无书籍，去书城逛逛吧！
+          </Text>
+        </TouchableOpacity>
       );
     }
     return null;

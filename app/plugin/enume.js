@@ -68,3 +68,14 @@ export const THIRD_AUTH_LOGIN = [
     value: 'QQ'
   }
 ];
+
+export const CANMERO_OPERATES = [
+  {
+    label: '拍摄照片',
+    value: 'camero'
+  },
+  {
+    label: '从相册选取',
+    value: 'photo_album'
+  }
+];
