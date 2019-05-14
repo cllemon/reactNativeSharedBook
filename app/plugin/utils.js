@@ -1,4 +1,5 @@
 import moment from 'moment';
+import REACTNATIVEFS from 'react-native-fs';
 
 export const themes = (color = '#fff') => ({
   tan: {
@@ -35,4 +36,25 @@ export const getAMPMNowStr = () => {
     }
   });
   return moment().format('A');
+};
+
+/**
+ * Android 文件处理 - 生成本地文件路径
+ * @param {String} ABSOLUTEPATH 文档目录的绝对路径
+ */
+export const generateLocalPath = async (url, format) => {
+  try {
+    const ABSOLUTEPATH = common.ios
+      ? REACTNATIVEFS.LibraryDirectoryPath
+      : REACTNATIVEFS.ExternalDirectoryPath;
+    const STORAGEPATH = `${ABSOLUTEPATH}/${Date.now()}.${format}`;
+    const { statusCode } = await REACTNATIVEFS.downloadFile({
+      fromUrl: url,
+      toFile: STORAGEPATH
+    }).promise;
+    if (statusCode === 200) return `file://${STORAGEPATH}`;
+    return false;
+  } catch (error) {
+    console.error('生成本地路径异常', error);
+  }
 };

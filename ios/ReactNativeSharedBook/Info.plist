@@ -71,5 +71,11 @@
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>享阅想访问您的相册</string>
+	<key>NSCameraUsageDescription</key>
+	<string>享阅想使用您的相机</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>享阅想将照片保存到你的相册</string>
 </dict>
 </plist>

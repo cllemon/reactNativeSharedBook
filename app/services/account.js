@@ -1,22 +1,28 @@
-// import service from '../service/index';
+import network from '../plugin/network';
 
-// /**
-//  * 登录
-//  */
-// export const login = (params = {}) => {
-//   return service('/user/login', 'POST', params);
-// };
+/**
+ * 注册
+ * @param {Object} data 参数
+ * @returns {Promise}
+ */
+export const register = (data = {}) => {
+  return network('user/register', 'POST', data);
+};
 
-// /**
-//  * 注册
-//  */
-// export const registeredAccount = (params = {}) => {
-//   return service('/user/registerAccount', 'POST', params);
-// };
+/**
+ * 登录
+ * @param {Object} data 参数
+ * @returns {Promise}
+ */
+export const login = (data = {}) => {
+  return network('user/login', 'POST', data);
+};
 
-// /**
-//  * 更改密码
-//  */
-// export const changePassword = (params = {}) => {
-//   return service('/auth/updatePassword', 'GET', params);
-// };
+/**
+ * 找回密码
+ * @param {Object} data 参数
+ * @returns {Promise}
+ */
+export const reset = (data = {}) => {
+  return network('user/reset', 'POST', data);
+};
