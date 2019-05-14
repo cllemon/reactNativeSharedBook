@@ -1,4 +1,4 @@
-import userRelated from './modules/userRelated';
+import userRelated from './modules/user';
 
 const fusionReducers = {
   userRelated

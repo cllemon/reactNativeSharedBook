@@ -1,10 +1,10 @@
 import { GET_USER_INFO } from '../types/user';
 import { login } from '../../services/account';
 import { asyncSave } from '../../plugin/asyncStorage';
-import constance from '../../utils/constance';
+import constance from '../../plugin/constance';
 
 /**
- * 处理登录操作
+ * 处理登录操作 - 获取用户信息
  * @param {Object} params 形参
  * @param {Object} userInfo 用户信息
  * @param {String} access_token token
@@ -13,12 +13,27 @@ import constance from '../../utils/constance';
  */
 export const handlerLogin = params => {
   return async dispatch => {
-    const userInfo = await login(params);
-    const { access_token } = userInfo.data;
-    await asyncSave(constance.service.ACCESS_TOKEN, access_token);
-    dispatch({
-      type: GET_USER_INFO,
-      payload: userInfo.data
-    });
+    try {
+      dispatch({
+        type: GET_USER_INFO,
+        payload: { loading: true }
+      });
+      const userInfo = await login(params);
+      if (userInfo) {
+        await asyncSave(constance.ACCESS_TOKEN, userInfo.access_token);
+        await asyncSave('USER_INFO', userInfo);
+      }
+      dispatch({
+        type: GET_USER_INFO,
+        payload: userInfo
+      });
+    } catch (error) {
+      console.log('登录拉取用户信息错误', error);
+    } finally {
+      dispatch({
+        type: GET_USER_INFO,
+        payload: { loading: false }
+      });
+    }
   };
 };
