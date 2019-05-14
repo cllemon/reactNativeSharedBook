@@ -5,27 +5,36 @@ import Input from '../../components/widget/input/index';
 import Label from '../../components/widget/Label';
 import Button from '../../components/widget/Button';
 import HollowLineHeading from '../../components/widget/HollowLineHeading';
+import Toast from 'react-native-root-toast';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { common } from '../../styles/index';
 import { THIRD_AUTH_LOGIN } from '../../plugin/enume';
+import { connect } from 'react-redux';
+import { handlerLogin } from '../../store/action/user';
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false,
       user_name: '',
       password: ''
     };
   }
 
-  onLogin = () => {
-    console.log('login'); // 登录
-    this.setState({ loading: true });
-    setTimeout(() => {
-      this.setState({ loading: false });
-    }, 4000);
+  onLogin = async () => {
+    const { password, user_name } = this.state;
+    if (!password || !user_name)
+      return Toast.show('账号或密码不得为空', {
+        position: 0
+      });
+    this.props.getUserInfo(user_name, password);
   };
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.userRelated.id) {
+      this.props.navigation.navigate('Desk');
+    }
+  }
 
   _renderForm = () => {
     return (
@@ -37,7 +46,7 @@ class Login extends Component {
             onChangeText={user_name => this.setState({ user_name })}
             style={{ width: 270 }}
             maxLength={12}
-            editable={!this.state.loading}
+            editable={!this.props.userRelated.loading}
           />
         </Label>
         <Label title='密码' mode='column'>
@@ -47,7 +56,7 @@ class Login extends Component {
             secureTextEntry={true}
             style={{ width: 270 }}
             onChangeText={password => this.setState({ password })}
-            editable={!this.state.loading}
+            editable={!this.props.userRelated.loading}
           />
         </Label>
         <TouchableOpacity
@@ -71,7 +80,11 @@ class Login extends Component {
                 key={index}
                 activeOpacity={0.8}
                 style={styles.third_item}
-                onPress={() => alert(item.label)}
+                onPress={() =>
+                  Toast.show('别急，该功能将在后续跟进，喜欢就支持下吧', {
+                    position: 0
+                  })
+                }
               >
                 <Icon name={item.value} style={styles.third_item_icon} />
                 <Text style={styles.third_item_title}>{item.label}</Text>
@@ -100,7 +113,7 @@ class Login extends Component {
         </View>
         {this._renderForm()}
         <Button
-          loading={this.state.loading}
+          loading={this.props.userRelated.loading}
           title='登 录'
           onPress={this.onLogin}
         />
@@ -155,4 +168,22 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Login;
+const mapStateToProps = state => {
+  const { userRelated } = state;
+  return {
+    userRelated
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getUserInfo: (user_name, password) => {
+      dispatch(handlerLogin({ user_name, password }));
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login);
