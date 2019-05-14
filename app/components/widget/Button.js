@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Text, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { Text, TouchableOpacity, ActivityIndicator, View } from 'react-native';
 import PropTypes from 'prop-types';
-import { common } from '../../styles/index';
+import { common, variable } from '../../styles/index';
 
 const ButtonPropsType = {
   title: PropTypes.string,

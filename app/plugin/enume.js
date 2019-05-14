@@ -72,10 +72,16 @@ export const THIRD_AUTH_LOGIN = [
 export const CANMERO_OPERATES = [
   {
     label: '拍摄照片',
-    value: 'camero'
+    value: 'camera'
   },
   {
     label: '从相册选取',
     value: 'photo_album'
   }
+];
+
+export const PERMISSION_CODE = [
+  { code: -1, tip: '授权被拒绝且不想再被询问' },
+  { code: 0, tip: '授权被拒绝' },
+  { code: 1, tip: '授权成功' }
 ];

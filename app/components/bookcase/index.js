@@ -11,6 +11,7 @@ import {
 import { common, variable } from '../../styles/index';
 import { createBatchObject } from '../../plugin/utils';
 import Icon from 'react-native-vector-icons/AntDesign';
+import { asyncRead } from '../../plugin/asyncStorage';
 
 const A_ROW_BOOK_COUNT = 3;
 
@@ -19,12 +20,15 @@ export default class Bookcase extends Component {
     super(props);
     this.state = {
       edit: false,
-      books: []
+      books: [],
+      userInfo: {}
     };
   }
 
-  componentDidMount() {
-    // this.getBooks();
+  async componentDidMount() {
+    const userInfo = await asyncRead('USER_INFO');
+    this.setState({ userInfo });
+    this.getBooks();
   }
 
   /**
