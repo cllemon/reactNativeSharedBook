@@ -3,6 +3,7 @@ package com.reactnativesharedbook;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.rnfs.RNFSPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.reactnativecommunity.webview.RNCWebViewPackage;
 import com.github.yamill.orientation.OrientationPackage;
@@ -13,9 +14,11 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+import com.imagepicker.ImagePickerPackage;
 
 import java.util.Arrays;
 import java.util.List;
+
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -29,12 +32,14 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNFSPackage(),
             new RNFetchBlobPackage(),
             new RNCWebViewPackage(),
             new OrientationPackage(),
             new RNZipArchivePackage(),
             new FPStaticServerPackage(),
-            new VectorIconsPackage()
+            new VectorIconsPackage(),
+            new ImagePickerPackage()
       );
     }
 
@@ -54,4 +59,5 @@ public class MainApplication extends Application implements ReactApplication {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
   }
+
 }

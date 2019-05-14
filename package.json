@@ -19,6 +19,8 @@
     "react": "16.6.3",
     "react-native": "0.58.6",
     "react-native-drawer": "^2.5.1",
+    "react-native-fs": "^2.13.3",
+    "react-native-image-picker": "^0.28.1",
     "react-native-root-toast": "^3.0.1",
     "react-native-swiper": "^1.5.14",
     "react-native-vector-icons": "^6.1.0",

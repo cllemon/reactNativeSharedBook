@@ -134,6 +134,8 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-fs')
+    implementation project(':react-native-image-picker')
     implementation project(':rn-fetch-blob')
     implementation project(':react-native-webview')
     implementation project(':react-native-orientation')
