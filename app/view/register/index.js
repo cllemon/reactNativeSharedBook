@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { common } from '../../styles/index';
 import { CANMERO_OPERATES } from '../../plugin/enume';
+import { asyncSave } from '../../plugin/asyncStorage';
 import constance from '../../plugin/constance';
 import ActionSheet from '../../components/widget/ActionSheet';
 import Header from '../../components/widget/Header';
@@ -16,7 +17,13 @@ import Input from '../../components/widget/input/index';
 import Label from '../../components/widget/Label';
 import Button from '../../components/widget/Button';
 import Icon from 'react-native-vector-icons/AntDesign';
+import ImagePicker from 'react-native-image-picker';
+import Toast from 'react-native-root-toast';
+import { register } from '../../services/account.js';
 
+const USER_NAME_REG = /[a-zA-Z_0-9]{6}/;
+const PHONE_REG = /^[1](([3][0-9])|([4][5-9])|([5][0-3,5-9])|([6][5,6])|([7][0-8])|([8][0-9])|([9][1,8,9]))[0-9]{8}$/;
+const PASSWORD_REG = /.{6}/;
 class Register extends Component {
   constructor(props) {
     super(props);
@@ -29,26 +36,81 @@ class Register extends Component {
     };
   }
 
-  onSubmit = () => {
-    console.log('submit'); // 拉注册信息
-    const message = `注意哦，手机号是你找回密码的唯一凭证，请确认手机号：${this
-      .state.phone || '未填写'}`;
-    Alert.alert('提示', message, [
-      { text: '去核对', style: 'cancel' },
-      {
-        text: '直接提交',
-        onPress: () => {
-          this.setState({ loading: true });
-          setTimeout(() => {
-            this.setState({ loading: false });
-          }, 4000);
-        }
-      }
-    ]);
+  validate = () => {
+    const { user_name, password, phone } = this.state;
+    if (!USER_NAME_REG.test(user_name)) {
+      Toast.show('用户名必须是 6 - 12 位字母和数字组合', { position: 0 });
+      return false;
+    }
+    if (!PASSWORD_REG.test(password)) {
+      Toast.show('密码至少为 6 位 ', { position: 0 });
+      return false;
+    }
+    if (!PHONE_REG.test(phone)) {
+      Toast.show('请输入正确的手机号码', { position: 0 });
+      return false;
+    }
+    return true;
   };
 
-  onActionSheet = index => {
-    console.log(index, '===////');
+  onRegister = async () => {
+    try {
+      this.setState({ loading: true });
+      const res = await register({
+        nickname: 'Free Man',
+        gender: 1,
+        user_name: this.state.user_name,
+        password: this.state.password,
+        phone: this.state.phone
+      });
+      this.state.vatar_url &&
+        (await asyncSave(constance.HEAD_URL_KEY, this.state.vatar_url));
+      if (res) {
+        Toast.show('恭喜你注册成功, 去登录吧', {
+          position: 0,
+          duration: 1000
+        });
+        setTimeout(() => {
+          this.props.navigation.navigate('Login');
+        }, 1000);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.setState({ loading: false });
+    }
+  };
+
+  onSubmit = () => {
+    const message = `注意哦，手机号是你找回密码的唯一凭证，请确认手机号：${this
+      .state.phone || '未填写'}`;
+    if (this.validate()) {
+      Alert.alert('提示', message, [
+        { text: '去核对', style: 'cancel' },
+        { text: '直接提交', onPress: () => this.onRegister() }
+      ]);
+    }
+  };
+
+  handlerPhoto = async response => {
+    try {
+      this.ActionSheet.setVisible(false);
+      if (response.error) {
+        Toast.show('图片选择错误', { position: 0 });
+        console.log('ImagePicker Error: ', response.error);
+        return false;
+      }
+      this.setState({ vatar_url: response.uri });
+    } catch (error) {
+      Toast.show('图片上传错误', { position: 0 });
+    }
+  };
+
+  onActionSheet = item => {
+    if (item.value === 'photo_album') {
+      return ImagePicker.launchImageLibrary({}, this.handlerPhoto);
+    }
+    return ImagePicker.launchCamera({}, this.handlerPhoto);
   };
 
   _renderForm = () => {
