@@ -9,6 +9,7 @@ import {
 import PropTypes from 'prop-types';
 import TitleBar from '../widget/TitleBar';
 import { common } from '../../styles';
+import { getCategories } from '../../services/library';
 
 const ClassificationPropsType = {
   navigation: PropTypes.object
@@ -31,55 +32,14 @@ export default class Classification extends Component {
     this.getClassifications();
   }
 
-  getClassifications() {
-    const list = [
-      {
-        url:
-          'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01ghYscV33C/TnxjtsHAtAAVI0.jpg!s',
-        id: 1
-      },
-      {
-        url:
-          'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01oPg7ituTp/oxU24Lok7dGmXB.jpg!s',
-        id: 2
-      },
-      {
-        url:
-          'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01gBJdt6aXg/A3fa52DoLUpzxa.jpg!s',
-        id: 3
-      },
-      {
-        url:
-          'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01ghYscV33C/TnxjtsHAtAAVI0.jpg!s',
-        id: 1
-      },
-      {
-        url:
-          'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01oPg7ituTp/oxU24Lok7dGmXB.jpg!s',
-        id: 2
-      },
-      {
-        url:
-          'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01gBJdt6aXg/A3fa52DoLUpzxa.jpg!s',
-        id: 3
-      },
-      {
-        url:
-          'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01ghYscV33C/TnxjtsHAtAAVI0.jpg!s',
-        id: 1
-      },
-      {
-        url:
-          'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01oPg7ituTp/oxU24Lok7dGmXB.jpg!s',
-        id: 2
-      },
-      {
-        url:
-          'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01gBJdt6aXg/A3fa52DoLUpzxa.jpg!s',
-        id: 3
-      }
-    ];
-    this.setState({ list });
+  async getClassifications() {
+    try {
+      const { list } = await getCategories();
+      this.setState({ list });
+      console.log(list, '一级分类');
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   onMore = () => {
@@ -104,7 +64,10 @@ export default class Classification extends Component {
                 }}
               >
                 {this.state.showCount > index && (
-                  <Image source={{ uri: item.url }} style={styles.img} />
+                  <Image
+                    source={{ uri: item.combination_cover }}
+                    style={styles.img}
+                  />
                 )}
               </TouchableOpacity>
             );

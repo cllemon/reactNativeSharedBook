@@ -12,6 +12,7 @@ import { common, variable } from '../../styles/index';
 import { createBatchObject } from '../../plugin/utils';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { asyncRead } from '../../plugin/asyncStorage';
+import constance from '../../plugin/constance';
 
 const A_ROW_BOOK_COUNT = 3;
 
@@ -26,7 +27,8 @@ export default class Bookcase extends Component {
   }
 
   async componentDidMount() {
-    const userInfo = await asyncRead('USER_INFO');
+    const userInfoStr = await asyncRead(constance.USER_INFO);
+    const userInfo = JSON.parse(userInfoStr) || {};
     this.setState({ userInfo });
     this.getBooks();
   }
@@ -243,95 +245,5 @@ const mock = [
     url:
       'http://cover.read.duokan.com/mfsv2/download/s010/p01EtppO1cU7/zLB8PHWW0XKZ4h.jpg!s',
     id: 33
-  },
-  {
-    url:
-      'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01oPg7ituTp/oxU24Lok7dGmXB.jpg!s',
-    id: 4
-  },
-  {
-    url:
-      'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01Tg7By8Va2/MlN1Wb3CMg08Rc.jpg!s',
-    id: 5
-  },
-  {
-    url:
-      'http://cover.read.duokan.com/mfsv2/download/s010/p013Qw0FnUqw/aceGRZ8ZgjqorV.jpg!s',
-    id: 6
-  },
-  {
-    url:
-      'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01gBJdt6aXg/A3fa52DoLUpzxa.jpg!s',
-    id: 7
-  },
-  {
-    url:
-      'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01JY2f8AVms/a0eGexOoz7aaZd.jpg!s',
-    id: 1
-  },
-  {
-    url:
-      'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01ghYscV33C/TnxjtsHAtAAVI0.jpg!s',
-    id: 2
-  },
-  {
-    url:
-      'http://cover.read.duokan.com/mfsv2/download/s010/p01EtppO1cU7/zLB8PHWW0XKZ4h.jpg!s',
-    id: 3
-  },
-  {
-    url:
-      'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01oPg7ituTp/oxU24Lok7dGmXB.jpg!s',
-    id: 4
-  },
-  {
-    url:
-      'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01Tg7By8Va2/MlN1Wb3CMg08Rc.jpg!s',
-    id: 5
-  },
-  {
-    url:
-      'http://cover.read.duokan.com/mfsv2/download/s010/p013Qw0FnUqw/aceGRZ8ZgjqorV.jpg!s',
-    id: 6
-  },
-  {
-    url:
-      'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01gBJdt6aXg/A3fa52DoLUpzxa.jpg!s',
-    id: 7
-  },
-  {
-    url:
-      'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01JY2f8AVms/a0eGexOoz7aaZd.jpg!s',
-    id: 1
-  },
-  {
-    url:
-      'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01ghYscV33C/TnxjtsHAtAAVI0.jpg!s',
-    id: 2
-  },
-  {
-    url:
-      'http://cover.read.duokan.com/mfsv2/download/s010/p01EtppO1cU7/zLB8PHWW0XKZ4h.jpg!s',
-    id: 3
-  },
-  {
-    url:
-      'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01oPg7ituTp/oxU24Lok7dGmXB.jpg!s',
-    id: 4
-  },
-  {
-    url:
-      'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01Tg7By8Va2/MlN1Wb3CMg08Rc.jpg!s',
-    id: 5
-  },
-  {
-    url:
-      'http://cover.read.duokan.com/mfsv2/download/s010/p013Qw0FnUqw/aceGRZ8ZgjqorV.jpg!s',
-    id: 6
-  },
-  {
-    url:
-      'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01gBJdt6aXg/A3fa52DoLUpzxa.jpg!s',
-    id: 7
   }
 ];

@@ -1,6 +1,6 @@
 import { GET_USER_INFO } from '../types/user';
 import { login } from '../../services/account';
-import { asyncSave } from '../../plugin/asyncStorage';
+import { asyncSave, asyncRead } from '../../plugin/asyncStorage';
 import constance from '../../plugin/constance';
 
 /**
@@ -20,8 +20,9 @@ export const handlerLogin = params => {
       });
       const userInfo = await login(params);
       if (userInfo) {
-        await asyncSave(constance.ACCESS_TOKEN, userInfo.access_token);
-        await asyncSave('USER_INFO', userInfo);
+        const head_url = await asyncRead(constance.HEAD_URL_KEY);
+        userInfo.avatar_url = head_url;
+        await asyncSave(constance.USER_INFO, JSON.stringify(userInfo));
       }
       dispatch({
         type: GET_USER_INFO,

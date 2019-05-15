@@ -32,7 +32,9 @@ class Login extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.userRelated.id) {
-      this.props.navigation.navigate('Desk');
+      this.props.navigation.replace('Desk', {
+        userInfo: nextProps.userRelated
+      });
     }
   }
 

@@ -13,7 +13,9 @@ const instance = axios.create(DEFAULT_OPTIONS);
 
 instance.interceptors.request.use(
   async config => {
-    const access_token = await asyncRead(constance.ACCESS_TOKEN);
+    const userInfoStr = await asyncRead(constance.USER_INFO);
+    const userInfo = JSON.parse(userInfoStr || '{}');
+    const { access_token } = userInfo;
     if (access_token) config.headers = { access_token };
     return config;
   },

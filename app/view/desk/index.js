@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Alert } from 'react-native';
+import { View, Text } from 'react-native';
 import { common, variable } from '../../styles/index';
 import Header from '../../components/widget/Header';
 import Bookcase from '../../components/bookcase/index';

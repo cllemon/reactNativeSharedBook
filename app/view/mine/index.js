@@ -4,6 +4,7 @@ import { common } from '../../styles/index';
 import { MINE_OPERATE_BAR } from '../../plugin/enume';
 import constance from '../../plugin/constance';
 import Icon from 'react-native-vector-icons/AntDesign';
+import { asyncRead } from '../../plugin/asyncStorage';
 class Mine extends Component {
   constructor(props) {
     super(props);
@@ -12,7 +13,22 @@ class Mine extends Component {
     };
   }
 
-  jumperToView = value => {
+  async componentDidMount() {
+    const userInfoStr = await asyncRead(constance.USER_INFO);
+    const userInfo = JSON.parse(userInfoStr) || {};
+    this.setState({ userInfo });
+  }
+
+  jumperToView = async () => {
+    const { userInfo } = this.state;
+    if (userInfo.id) {
+      this.props.navigation.navigate('PersonalInformation', { userInfo });
+    } else {
+      this.props.navigation.navigate('Login');
+    }
+  };
+
+  jumperToBar = value => {
     this.props.navigation.navigate(value);
   };
 
@@ -22,7 +38,7 @@ class Mine extends Component {
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={() => {
-            this.jumperToView(operate.value);
+            this.jumperToBar(operate.value);
           }}
           key={operate.value}
           style={styles.operate_item}
@@ -39,26 +55,25 @@ class Mine extends Component {
   };
 
   _renderAvatar = () => {
-    const isLogin = false;
     return (
       <View style={styles.avatar}>
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={() => {
-            this.jumperToView(isLogin ? 'PersonalInformation' : 'Login');
+            this.jumperToView();
           }}
         >
           <Image
             source={
-              this.state.userInfo.avatar
-                ? { uri: this.state.userInfo.avatar }
+              this.state.userInfo.avatar_url
+                ? { uri: this.state.userInfo.avatar_url }
                 : constance.DEFAULT_HEAD_URL
             }
             style={styles.avatar_img}
           />
         </TouchableOpacity>
         <Text style={styles.nick_name} numberOfLines={1}>
-          {this.state.userInfo.name || 'Free Man'}
+          {this.state.userInfo.nickname || 'Free Man'}
         </Text>
       </View>
     );
