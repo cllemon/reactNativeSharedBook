@@ -5,6 +5,8 @@ import Input from '../../components/widget/input/index';
 import Label from '../../components/widget/Label';
 import Button from '../../components/widget/Button';
 import { common } from '../../styles/index';
+import { reset } from '../../services/account';
+import Toast from 'react-native-root-toast';
 
 class ResetPassword extends Component {
   constructor(props) {
@@ -19,11 +21,44 @@ class ResetPassword extends Component {
     };
   }
 
+  _resetPassword = async () => {
+    try {
+      this.setState({ loading: true });
+      const { password, user_name, phone } = this.state;
+      const result = await reset({ phone, user_name, password });
+      if (result) {
+        Toast.show('重置成功', { position: 0 });
+        setTimeout(() => {
+          this.props.navigation.replace('Login');
+        }, 1000);
+      } else {
+        this.setState({ verification: false, user_name: '', phone: '' });
+      }
+    } catch (error) {
+      console.log('重置异常：', error);
+    } finally {
+      this.setState({ loading: false });
+    }
+  };
+
   _onPress = () => {
-    this.setState({ loading: true });
-    setTimeout(() => {
-      this.setState({ loading: false, verification: !this.state.verification });
-    }, 2000);
+    const {
+      phone,
+      user_name,
+      verification,
+      secondary_password,
+      password
+    } = this.state;
+    if (verification) {
+      if (!secondary_password || !password)
+        return Toast.show('密码不得为空', { position: 0 });
+      if (secondary_password !== password)
+        return Toast.show('两次密码不一致', { position: 0 });
+      return this._resetPassword();
+    }
+    if (!phone || !user_name)
+      return Toast.show('手机号或用户名不得为空', { position: 0 });
+    this.setState({ verification: true });
   };
 
   _renderFormVerify = () => {
@@ -43,7 +78,7 @@ class ResetPassword extends Component {
           <Input
             value={this.state.phone}
             placeholder={'请输入手机号'}
-            maxLength={12}
+            maxLength={11}
             style={{ width: 270 }}
             onChangeText={phone => this.setState({ phone })}
             editable={!this.state.loading}
