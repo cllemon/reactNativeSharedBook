@@ -26,3 +26,12 @@ export const login = (data = {}) => {
 export const reset = (data = {}) => {
   return network('user/reset', 'POST', data);
 };
+
+/**
+ * 重置密码验证
+ * @param {Object} data 参数
+ * @returns {Promise}
+ */
+export const verify = (data = {}) => {
+  return network('user/verify', 'POST', data);
+};
