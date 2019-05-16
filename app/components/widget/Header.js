@@ -69,7 +69,9 @@ export default class Header extends Component {
         />
         <View style={HEADER_STYLE}>
           {this._renderLeft()}
-          <Text style={common.h()}>{this.props.title}</Text>
+          <Text style={[common.h(), { maxWidth: 200 }]} numberOfLines={1}>
+            {this.props.title}
+          </Text>
           {this._renderRight()}
         </View>
       </View>

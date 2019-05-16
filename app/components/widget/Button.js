@@ -63,7 +63,7 @@ export default class Button extends Component {
             color: '#fff',
             fontSize: 16,
             marginLeft: 10,
-            ...style.title
+            ...(style.title || {})
           }}
         >
           {title}

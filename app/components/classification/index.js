@@ -36,9 +36,8 @@ export default class Classification extends Component {
     try {
       const { list } = await getCategories();
       this.setState({ list });
-      console.log(list, '一级分类');
     } catch (error) {
-      console.log(error);
+      console.log('拉取一级分类异常', error);
     }
   }
 

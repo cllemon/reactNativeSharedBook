@@ -110,7 +110,13 @@ export default {
   $ios_box_shadow_book: {
     shadowColor: 'rgba(117,127,136,0.3)',
     shadowOffset: { height: 0, width: 2 },
-    shadowOpacity: 0.9,
+    shadowOpacity: 1,
+    shadowRadius: 6
+  },
+  $ios_box_shadow_bottom: {
+    shadowColor: '#72879B',
+    shadowOffset: { height: 0, width: -1 },
+    shadowOpacity: 1,
     shadowRadius: 6
   },
 
