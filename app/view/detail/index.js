@@ -5,7 +5,8 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
-  Image
+  Image,
+  Alert
 } from 'react-native';
 import Header from '../../components/widget/Header';
 import Loading from '../../components/widget/Loading';
@@ -13,6 +14,10 @@ import Button from '../../components/widget/Button';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { common, variable } from '../../styles/index';
 import { getBookDetail } from '../../services/books';
+import { addBookcase } from '../../services/bookcase';
+import { asyncRead } from '../../plugin/asyncStorage';
+import constance from '../../plugin/constance';
+import Toast from 'react-native-root-toast';
 
 class Detail extends Component {
   constructor(props) {
@@ -42,6 +47,36 @@ class Detail extends Component {
       this.setState({ loading: false });
     }
   }
+
+  addBookcase = async () => {
+    try {
+      const userInfoStr = await asyncRead(constance.USER_INFO);
+      const { user_id, book_id } = JSON.parse(userInfoStr) || {};
+      if (!user_id) return this.goLogin();
+      this.setState({ loading: true });
+      await addBookcase({ user_id, book_id });
+    } catch (error) {
+      console.log('加入书柜异常', error);
+    } finally {
+      this.setState({ loading: false });
+    }
+  };
+
+  goLogin = () => {
+    Alert.alert('提示', '您未登录，无法加入书柜，去登录记录你畅读的图书吧！', [
+      { text: '不了', style: 'cancel' },
+      {
+        text: '去登录',
+        onPress: () =>
+          this.props.navigation.replace('Login', { book: this.state.book })
+      }
+    ]);
+  };
+
+  reading = () => {
+    const { detailInfo } = this.state;
+    this.props.navigation.navigate('Reading', { detailInfo });
+  };
 
   _renderCardTags = () => {
     const { tags } = this.state.detailInfo;
@@ -150,11 +185,23 @@ class Detail extends Component {
     } = this.state.detailInfo;
     return (
       <View style={styles.simpleInformation}>
-        <Text>版权：{copyright}</Text>
-        <Text>价格：{price}</Text>
-        <Text>出版时间：{publication_date}</Text>
-        <Text>评分：{score}</Text>
-        <Text>字数：{word_count}</Text>
+        {Boolean(copyright) && (
+          <Text style={styles.simpleInformation_text}>版权：{copyright}</Text>
+        )}
+        {Boolean(publication_date) && (
+          <Text style={styles.simpleInformation_text}>
+            出版时间：{publication_date}
+          </Text>
+        )}
+        {Boolean(price) && (
+          <Text style={styles.simpleInformation_text}>价格：{price} 元</Text>
+        )}
+        {Boolean(score) && (
+          <Text style={styles.simpleInformation_text}>评分：{score}</Text>
+        )}
+        {Boolean(word_count) && (
+          <Text style={styles.simpleInformation_text}>字数：{word_count}</Text>
+        )}
       </View>
     );
   };
@@ -164,14 +211,21 @@ class Detail extends Component {
     // staro star
     return (
       <View style={styles.bottom}>
-        <TouchableOpacity style={styles.bottom_item}>
+        <TouchableOpacity style={styles.bottom_item} onPress={this.addBookcase}>
           <Icon
             name='pluscircleo'
             style={common.fontColorSize('#D8D8D8', 20)}
           />
           <Text style={styles.bottom_text}>加入书架</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.bottom_item}>
+        <TouchableOpacity
+          style={styles.bottom_item}
+          onPress={() => {
+            Toast.show('别急哦，该功能待迭代更新，加入书柜也是一样的哦！', {
+              position: 0
+            });
+          }}
+        >
           <Icon name='staro' style={common.fontColorSize('#D8D8D8', 20)} />
           <Text style={styles.bottom_text}>收藏</Text>
         </TouchableOpacity>
@@ -183,6 +237,7 @@ class Detail extends Component {
               height: 36
             }
           }}
+          onPress={this.reading}
         />
       </View>
     );
@@ -278,6 +333,10 @@ const styles = StyleSheet.create({
     minHeight: 100,
     borderRadius: 8,
     padding: 16
+  },
+  simpleInformation_text: {
+    ...common.fontColorSize('#BEC2C8', 12),
+    lineHeight: 17
   },
 
   /** 底部操作 */
