@@ -6,7 +6,7 @@ import network from '../plugin/network';
  * @returns {Promise}
  */
 export const getBookcaseList = (data = {}) => {
-  return network('api/bookcase/list', 'GET', data);
+  return network('bookcase/list', 'POST', data);
 };
 
 /**
@@ -15,7 +15,7 @@ export const getBookcaseList = (data = {}) => {
  * @returns {Promise}
  */
 export const removeBookcase = (data = {}) => {
-  return network('api/bookcase/delete', 'POST', data);
+  return network('bookcase/delete', 'POST', data);
 };
 
 /**
@@ -23,6 +23,6 @@ export const removeBookcase = (data = {}) => {
  * @param {Object} data 参数
  * @returns {Promise}
  */
-export const removeBookcase = (data = {}) => {
-  return network('api/bookcase/add', 'POST', data);
+export const addBookcase = (data = {}) => {
+  return network('bookcase/add', 'POST', data);
 };

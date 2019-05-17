@@ -28,7 +28,7 @@ class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      vatar_url: null,
+      avatar_url: null,
       user_name: '',
       password: '',
       phone: '',
@@ -61,10 +61,9 @@ class Register extends Component {
         gender: 1,
         user_name: this.state.user_name,
         password: this.state.password,
-        phone: this.state.phone
+        phone: this.state.phone,
+        avatar_url: this.state.avatar_url
       });
-      this.state.vatar_url &&
-        (await asyncSave(constance.HEAD_URL_KEY, this.state.vatar_url));
       if (res) {
         Toast.show('恭喜你注册成功, 去登录吧', {
           position: 0,
@@ -100,7 +99,7 @@ class Register extends Component {
         console.log('ImagePicker Error: ', response.error);
         return false;
       }
-      this.setState({ vatar_url: response.uri });
+      this.setState({ avatar_url: `data:image/png;base64,${response.data}` });
     } catch (error) {
       Toast.show('图片上传错误', { position: 0 });
     }
@@ -108,9 +107,21 @@ class Register extends Component {
 
   onActionSheet = item => {
     if (item.value === 'photo_album') {
-      return ImagePicker.launchImageLibrary({}, this.handlerPhoto);
+      return ImagePicker.launchImageLibrary(
+        {
+          maxWidth: 200,
+          maxHeight: 200
+        },
+        this.handlerPhoto
+      );
     }
-    return ImagePicker.launchCamera({}, this.handlerPhoto);
+    return ImagePicker.launchCamera(
+      {
+        maxWidth: 200,
+        maxHeight: 200
+      },
+      this.handlerPhoto
+    );
   };
 
   _renderForm = () => {
@@ -170,8 +181,8 @@ class Register extends Component {
             <Image
               style={styles.avatar_img}
               source={
-                this.state.vatar_url
-                  ? { uri: this.state.vatar_url }
+                this.state.avatar_url
+                  ? { uri: this.state.avatar_url }
                   : constance.DEFAULT_HEAD_URL
               }
             />
