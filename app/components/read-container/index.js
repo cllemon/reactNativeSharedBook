@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, StatusBar } from 'react-native';
 import PropTypes from 'prop-types';
-
 import { Epub, Streamer } from 'epubjs-rn';
 import ReadTopBar from './readTopBar';
 import ReadNav from './readNav';
 import ReadBottomBar from './readBottomBar';
-import { themes } from '../../utils/utils';
+import { themes } from '../../plugin/utils';
 
 const ReaderPropsType = {
   location: PropTypes.number,
@@ -193,8 +192,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Reader;
-
 PropTypes.Reader = ReaderPropsType;
 
 Reader.defaultProps = ReaderDefaultProps;
+
+export default Reader;

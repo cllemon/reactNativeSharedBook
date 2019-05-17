@@ -10,11 +10,11 @@ import {
   TouchableOpacity,
   Platform
 } from 'react-native';
-import constance from '../../utils/constance';
+// import constance from '../../utils/constance';
 
 import Icon from 'react-native-vector-icons/EvilIcons';
 
-class ReadNav extends Component<{}> {
+class ReadNav extends Component {
   constructor(props) {
     super(props);
 
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: '#eee',
-    width: constance.value.windowWidth * 0.7
+    width: 300
   },
   navTitle: {
     fontSize: 16,
