@@ -6,7 +6,8 @@ import {
   StyleSheet,
   FlatList,
   Image,
-  ScrollView
+  ScrollView,
+  ActivityIndicator
 } from 'react-native';
 import Header from '../../components/widget/Header';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -241,7 +242,14 @@ class List extends PureComponent {
         </View>
       );
     }
-    return null;
+    return (
+      <View style={styles.footer}>
+        <ActivityIndicator size='small' color='#697B84' />
+        <Text style={[styles.footer_text, { fontSize: 14, marginLeft: 6 }]}>
+          加载中...
+        </Text>
+      </View>
+    );
   };
 
   render() {
@@ -341,7 +349,8 @@ const styles = StyleSheet.create({
 
   footer: {
     padding: 10,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    flexDirection: 'row'
   },
   footer_text: {
     ...common.fontColorSize('#697B84', 16),
