@@ -20,9 +20,7 @@ export const handlerLogin = params => {
       });
       const userInfo = await login(params);
       if (userInfo) {
-        // const head_url = await asyncRead(constance.HEAD_URL_KEY);
-        // userInfo.avatar_url = head_url;
-        await asyncSave(constance.USER_INFO, JSON.stringify(userInfo));
+        await asyncSave(constance.USER_INFO, userInfo);
       }
       dispatch({
         type: GET_USER_INFO,

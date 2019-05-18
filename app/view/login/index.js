@@ -34,10 +34,13 @@ class Login extends Component {
     if (nextProps.userRelated.id) {
       const { book } = this.props.navigation.state.params || {};
       const name = book ? 'Detail' : 'Desk';
-      this.props.navigation.replace(name, {
-        userInfo: nextProps.userRelated,
-        book: book
-      });
+      Toast.show('登录成功', { position: 0 });
+      setTimeout(() => {
+        this.props.navigation.replace(name, {
+          userInfo: nextProps.userRelated,
+          book: book
+        });
+      }, 400);
     }
   }
 

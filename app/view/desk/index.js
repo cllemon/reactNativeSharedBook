@@ -7,13 +7,6 @@ import ChickenSoupCard from '../../components/chicken-soup-card/index';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 export default class Desk extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      list: []
-    };
-  }
-
   render() {
     const { navigation } = this.props;
     return (
@@ -35,7 +28,7 @@ export default class Desk extends Component {
           }
           onLeftPress={navigation.openDrawer}
           onRightPress={() => {
-            navigation.navigate('Library');
+            navigation.replace('Library');
           }}
         />
         <View style={common.mVerticalHorizontal(16, 16)}>

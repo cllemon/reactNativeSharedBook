@@ -133,7 +133,6 @@ class List extends PureComponent {
       params.subclass_id = this.state.currentSubclass.subclass_id;
     }
     this.initData(params);
-    console.log(str);
   };
 
   /**

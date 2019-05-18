@@ -14,7 +14,7 @@ import Button from '../../components/widget/Button';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { common, variable } from '../../styles/index';
 import { getBookDetail } from '../../services/books';
-import { addBookcase } from '../../services/bookcase';
+import { addBookcase, getBookcaseBook } from '../../services/bookcase';
 import { asyncRead } from '../../plugin/asyncStorage';
 import constance from '../../plugin/constance';
 import Toast from 'react-native-root-toast';
@@ -25,10 +25,26 @@ class Detail extends Component {
     this.state = {
       title: '图书详情',
       loading: false,
+      isAddedBookcase: false,
+      userInfo: {},
       detailInfo: {},
       book: {},
       numberOfLines: 3
     };
+  }
+
+  componentWillMount() {
+    this.getUserInfo();
+  }
+
+  async getUserInfo() {
+    try {
+      const userInfoStr = await asyncRead(constance.USER_INFO);
+      const userInfo = JSON.parse(userInfoStr || '{}');
+      this.setState({ userInfo });
+    } catch (error) {
+      console.log('获取用户信息异常', error);
+    }
   }
 
   componentDidMount() {
@@ -40,6 +56,14 @@ class Detail extends Component {
       const { book } = this.props.navigation.state.params || {};
       this.setState({ loading: true, book: book || {} });
       const detailInfo = await getBookDetail({ book_id: book.book_id });
+      const { user_id } = this.state.userInfo;
+      if (user_id) {
+        const Book = await getBookcaseBook({
+          user_id,
+          book_id: book.book_id
+        });
+        this.setState({ isAddedBookcase: Boolean(Book.book_id) });
+      }
       this.setState({ detailInfo });
     } catch (error) {
       console.log(error);
@@ -48,13 +72,24 @@ class Detail extends Component {
     }
   }
 
-  addBookcase = async () => {
+  _addBookcase = async () => {
     try {
-      const userInfoStr = await asyncRead(constance.USER_INFO);
-      const { user_id, book_id } = JSON.parse(userInfoStr) || {};
+      if (this.state.isAddedBookcase) {
+        return this.props.navigation.replace('Desk');
+      }
+      const { user_id } = this.state.userInfo;
       if (!user_id) return this.goLogin();
       this.setState({ loading: true });
-      await addBookcase({ user_id, book_id });
+      const { cover, book_id } = this.state.detailInfo;
+      const resullt = await addBookcase({
+        user_id,
+        book_id,
+        cover
+      });
+      if (resullt) {
+        Toast.show('加入成功', { position: 0 });
+        this.setState({ isAddedBookcase: true });
+      }
     } catch (error) {
       console.log('加入书柜异常', error);
     } finally {
@@ -209,17 +244,23 @@ class Detail extends Component {
   _renderBottomOperate = () => {
     // pluscircleo pluscircle
     // staro star
+    const IconName = this.state.isAddedBookcase
+      ? 'checkcircleo'
+      : 'pluscircleo';
+    const title = this.state.isAddedBookcase ? '已加入' : '加入书架';
     return (
       <View style={styles.bottom}>
-        <TouchableOpacity style={styles.bottom_item} onPress={this.addBookcase}>
-          <Icon
-            name='pluscircleo'
-            style={common.fontColorSize('#D8D8D8', 20)}
-          />
-          <Text style={styles.bottom_text}>加入书架</Text>
+        <TouchableOpacity
+          style={styles.bottom_item}
+          onPress={this._addBookcase}
+          activeOpacity={0.8}
+        >
+          <Icon name={IconName} style={common.fontColorSize('#D8D8D8', 20)} />
+          <Text style={styles.bottom_text}>{title}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.bottom_item}
+          activeOpacity={0.8}
           onPress={() => {
             Toast.show('别急哦，该功能待迭代更新，加入书柜也是一样的哦！', {
               position: 0

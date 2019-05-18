@@ -6,13 +6,16 @@ import {
   StyleSheet,
   ScrollView,
   ImageBackground,
-  Platform
+  Platform,
+  RefreshControl
 } from 'react-native';
 import { common, variable } from '../../styles/index';
 import { createBatchObject } from '../../plugin/utils';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { asyncRead } from '../../plugin/asyncStorage';
 import constance from '../../plugin/constance';
+import { getBookcaseList, removeBookcase } from '../../services/bookcase';
+import Toast from 'react-native-root-toast';
 
 const A_ROW_BOOK_COUNT = 3;
 
@@ -20,25 +23,32 @@ export default class Bookcase extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: false,
       edit: false,
-      books: [],
-      userInfo: {}
+      books: []
     };
   }
 
-  async componentDidMount() {
-    const userInfoStr = await asyncRead(constance.USER_INFO);
-    const userInfo = JSON.parse(userInfoStr) || {};
-    this.setState({ userInfo });
+  componentDidMount() {
     this.getBooks();
   }
 
   /**
    * 获取图书列表
    */
-  getBooks = () => {
-    // 发请求
-    this.setState({ books: this.integerList(mock) });
+  getBooks = async () => {
+    try {
+      const userInfoStr = await asyncRead(constance.USER_INFO);
+      const userInfo = JSON.parse(userInfoStr || '{}');
+      if (!userInfo.user_id) return false;
+      this.setState({ loading: true });
+      const { list } = await getBookcaseList({ user_id: userInfo.user_id });
+      this.setState({ books: this.integerList(list) });
+    } catch (error) {
+      console.log('拉取书柜藏书列表异常', error);
+    } finally {
+      this.setState({ loading: false });
+    }
   };
 
   /**
@@ -50,6 +60,10 @@ export default class Bookcase extends Component {
     return list.concat(createBatchObject(remainder));
   }
 
+  _onRefresh = () => {
+    this.getBooks();
+  };
+
   /**
    * 响应点按查看图书
    *
@@ -59,7 +73,7 @@ export default class Bookcase extends Component {
   _onPress(book) {
     // 直接去阅读
     if (book && !this.state.edit) {
-      this.props.navigation.navigate('Detail', { book });
+      // this.props.navigation.navigate('Detail', { book });
     }
   }
 
@@ -80,11 +94,19 @@ export default class Bookcase extends Component {
   /**
    * 移除书架
    */
-  _onDelete = (book, index) => {
-    // 发请求调删除接口 async this.deleteCollection
-    // 刷新列表 async this.getBooks
-    this.setState({ edit: false });
-    console.log(`移除书架成功${book},${index}`);
+  _onDelete = async (book, index) => {
+    try {
+      const { book_id, user_id } = book;
+      const result = await removeBookcase({ book_id, user_id });
+      if (result) {
+        Toast.show('移除成功', { position: 0 });
+        this.getBooks();
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.setState({ edit: false });
+    }
   };
 
   /**
@@ -93,7 +115,7 @@ export default class Bookcase extends Component {
   _renderBook = (book, index) => {
     return (
       <View style={styles.book} key={`book_${index}_${Math.random()}`}>
-        {book.url && (
+        {book.book_id && (
           <TouchableOpacity
             activeOpacity={0.8}
             onLongPress={this._onLongPress}
@@ -102,7 +124,7 @@ export default class Bookcase extends Component {
             }}
           >
             <View style={styles.img_wraper}>
-              <ImageBackground style={styles.img} source={{ uri: book.url }}>
+              <ImageBackground style={styles.img} source={{ uri: book.cover }}>
                 {this.state.edit && (
                   <TouchableOpacity
                     style={styles.delete}
@@ -117,7 +139,7 @@ export default class Bookcase extends Component {
             </View>
           </TouchableOpacity>
         )}
-        <View style={[styles.shadow_side, !book.url && { marginTop: 114 }]} />
+        <View style={[styles.shadow_side, !book.cover && { marginTop: 114 }]} />
         <View style={styles.glossy_side} />
       </View>
     );
@@ -128,8 +150,16 @@ export default class Bookcase extends Component {
    */
   _scrollContent = books => {
     if (books && books.length) {
+      // 这里每次进来时需要下拉刷新
       return (
-        <ScrollView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.loading}
+              onRefresh={this._onRefresh}
+            />
+          }
+        >
           <View style={styles.bookcase}>
             {books.map((book, index) => {
               return this._renderBook(book, index);

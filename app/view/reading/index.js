@@ -17,7 +17,6 @@ class Reading extends Component {
   componentDidMount() {
     const { ebup } = this.props.navigation.state.params.detailInfo || {};
     this.setState({ ebup });
-    console.log(ReadContaniner, '===');
   }
 
   _renderNoneScourceTips = () => {

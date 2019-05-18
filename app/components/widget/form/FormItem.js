@@ -43,7 +43,6 @@ export default class FormItem extends Component {
   }
 
   componentDidMount() {
-    console.log('渲染几次');
     this.props.consumerFormItemRefs(this);
   }
 

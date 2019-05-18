@@ -33,6 +33,9 @@ class LibraryView extends Component {
           navigation={navigation}
           title='书城'
           right={<Icon name='search1' style={common.fontColorSize()} />}
+          onLeftPress={() => {
+            navigation.replace('Desk');
+          }}
           onRightPress={() => {
             navigation.navigate('Search');
           }}

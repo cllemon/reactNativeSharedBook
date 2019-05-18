@@ -1,33 +1,26 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StatusBar } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { common, variable } from '../../styles/index';
 
-const TemplatePropsType = {
+const InputPropsType = {
   title: PropTypes.string,
-  left: PropTypes.children,
-  right: PropTypes.children,
-  onLeftPress: PropTypes.function,
   onRightPress: PropTypes.function
 };
 
-const TemplateDefaultProps = {
+const InputDefaultProps = {
   title: '',
-  left: <Icon name='arrowleft' style={common.fontColorSize()} />,
-  right: null,
-  onLeftPress: () =>
-    console.log('Please attach a method called onLeftPress to this component'),
   onRightPress: () =>
     console.log('Please attach a method called onRightPress to this component')
 };
 
-export default class Template extends Component {
+export default class Input extends Component {
   render() {
     return <View />;
   }
 }
 
-PropTypes.Template = TemplatePropsType;
+PropTypes.Input = InputPropsType;
 
-Template.defaultProps = TemplateDefaultProps;
+Input.defaultProps = InputDefaultProps;
