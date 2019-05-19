@@ -26,3 +26,12 @@ export const getBookList = (data = {}) => {
 export const getBookDetail = (data = {}) => {
   return network('books/detail', 'GET', data);
 };
+
+/**
+ * 获取推荐图书
+ * @param {Object} data 参数
+ * @returns {Promise}
+ */
+export const getBookRecommend = (data = {}) => {
+  return network('books/recommend', 'GET', data);
+};

@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import PropTypes from 'prop-types';
 import { common } from '../../styles/index';
 import TitleBar from '../widget/TitleBar';
+import { getBookRecommend } from '../../services/books';
 
 const RecommendedPropsType = {
   navigation: PropTypes.object
@@ -24,30 +25,13 @@ export default class Recommended extends Component {
     this.getRecommendedList();
   }
 
-  getRecommendedList = () => {
-    const list = [
-      {
-        url:
-          'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01ghYscV33C/TnxjtsHAtAAVI0.jpg!s',
-        id: 1
-      },
-      {
-        url:
-          'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01oPg7ituTp/oxU24Lok7dGmXB.jpg!s',
-        id: 2
-      },
-      {
-        url:
-          'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01gBJdt6aXg/A3fa52DoLUpzxa.jpg!s',
-        id: 3
-      }
-    ];
-    this.setState({ list });
-  };
-
-  onRecommended = () => {
-    // 发请求
-    console.log('换一批');
+  getRecommendedList = async () => {
+    try {
+      const list = await getBookRecommend();
+      this.setState({ list });
+    } catch (error) {
+      console.log('获取推荐图书异常', error);
+    }
   };
 
   render() {
@@ -56,24 +40,26 @@ export default class Recommended extends Component {
         <TitleBar
           title='猜你喜欢'
           label='换一批'
-          onPress={this.onRecommended}
+          onPress={this.getRecommendedList}
         />
         <View style={styles.content}>
-          {this.state.list.map(item => {
+          {this.state.list.map((item, index) => {
             return (
               <TouchableOpacity
                 style={styles.content_item}
-                key={item.id}
+                key={index}
                 activeOpacity={0.9}
                 onPress={() => {
                   this.props.navigation.navigate('Detail', { book: item });
                 }}
               >
                 <Image
-                  source={{ uri: item.url }}
+                  source={{ uri: item.cover }}
                   style={styles.content_item_img}
                 />
-                <Text style={styles.content_item_title}>书籍名称</Text>
+                <Text style={styles.content_item_title} numberOfLines={1}>
+                  {item.title}
+                </Text>
               </TouchableOpacity>
             );
           })}
@@ -95,7 +81,8 @@ const styles = StyleSheet.create({
   },
   content_item: {
     flexDirection: 'column',
-    ...common.shadow()
+    ...common.shadow(),
+    width: 100
   },
   content_item_img: {
     height: 140,
