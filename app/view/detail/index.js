@@ -75,7 +75,8 @@ class Detail extends Component {
   _addBookcase = async () => {
     try {
       if (this.state.isAddedBookcase) {
-        return this.props.navigation.replace('Desk');
+        // return this.props.navigation.replace('Desk');
+        return;
       }
       const { user_id } = this.state.userInfo;
       if (!user_id) return this.goLogin();
