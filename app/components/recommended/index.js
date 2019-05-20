@@ -77,7 +77,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     flexWrap: 'wrap',
-    marginHorizontal: 16
+    marginHorizontal: 16,
+    minHeight: 150
   },
   content_item: {
     flexDirection: 'column',

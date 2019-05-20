@@ -15,6 +15,7 @@ import List from '../view/list/index';
 import Register from '../view/register/index';
 import ResetPassword from '../view/reset-password/index';
 import Reading from '../view/reading/index';
+import About from '../view/about/index';
 
 const DEFAULT_OPTIONS = {
   header: null,
@@ -46,5 +47,6 @@ export default {
   List: getNavigationOptions(List),
   Register: getNavigationOptions(Register),
   ResetPassword: getNavigationOptions(ResetPassword),
-  Reading: getNavigationOptions(Reading)
+  Reading: getNavigationOptions(Reading),
+  About: getNavigationOptions(About)
 };

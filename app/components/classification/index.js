@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import {
   View,
-  Image,
+  Text,
   TouchableOpacity,
   StyleSheet,
-  Platform
+  Platform,
+  ImageBackground
 } from 'react-native';
 import PropTypes from 'prop-types';
 import TitleBar from '../widget/TitleBar';
@@ -63,10 +64,12 @@ export default class Classification extends Component {
                 }}
               >
                 {this.state.showCount > index && (
-                  <Image
+                  <ImageBackground
                     source={{ uri: item.combination_cover }}
                     style={styles.img}
-                  />
+                  >
+                    <Text style={styles.img_text}>{item.label}</Text>
+                  </ImageBackground>
                 )}
               </TouchableOpacity>
             );
@@ -105,6 +108,10 @@ const styles = StyleSheet.create({
     height: 106,
     width: 106,
     borderRadius: 4
+  },
+  img_text: {
+    ...common.fontColorSize('#2C2C2C', 16),
+    marginTop: 6
   }
 });
 
