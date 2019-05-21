@@ -19,7 +19,7 @@ export const getBookList = (data = {}) => {
 };
 
 /**
- * 获取图书列表
+ * 获取图书详情
  * @param {Object} data 参数
  * @returns {Promise}
  */
@@ -34,4 +34,13 @@ export const getBookDetail = (data = {}) => {
  */
 export const getBookRecommend = (data = {}) => {
   return network('books/recommend', 'GET', data);
+};
+
+/**
+ * 获取推荐图书
+ * @param {Object} data 参数
+ * @returns {Promise}
+ */
+export const getSearchList = (data = {}) => {
+  return network('books/searchList', 'GET', data);
 };

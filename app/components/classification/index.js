@@ -110,8 +110,9 @@ const styles = StyleSheet.create({
     borderRadius: 4
   },
   img_text: {
-    ...common.fontColorSize('#2C2C2C', 16),
-    marginTop: 6
+    ...common.h(13, '#2C2C2C'),
+    marginTop: 10,
+    marginLeft: 10
   }
 });
 

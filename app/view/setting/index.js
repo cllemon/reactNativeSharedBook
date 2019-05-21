@@ -3,13 +3,28 @@ import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import Header from '../../components/widget/Header';
 import { common } from '../../styles/index';
 import Button from '../../components/widget/Button';
-import { asyncDelete } from '../../plugin/asyncStorage';
+import { asyncDelete, asyncRead } from '../../plugin/asyncStorage';
 import constance from '../../plugin/constance';
 import Toast from 'react-native-root-toast';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 export default class Setting extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userInfo: {}
+    };
+  }
+
+  async componentDidMount() {
+    const userInfoStr = await asyncRead(constance.USER_INFO);
+    const userInfo = JSON.parse(userInfoStr || '{}');
+    this.setState({ userInfo });
+  }
+
   loginOut = () => {
+    if (!this.state.userInfo.user_id)
+      return this.props.navigation.replace('Login');
     asyncDelete(constance.USER_INFO);
     this.props.navigation.replace('Desk');
     Toast.show('退出成功', { position: 0 });
@@ -45,7 +60,7 @@ export default class Setting extends Component {
           </TouchableOpacity>
         </View>
         <Button
-          title='退出登录'
+          title={this.state.userInfo.user_id ? '退出登录' : '去登录'}
           onPress={this.loginOut}
           style={{
             touch: {
