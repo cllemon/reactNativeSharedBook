@@ -27,7 +27,7 @@ export default {
   isIphoneX: IphoneX,
 
   iosHeaderMarginTop: () => {
-    if (IOS) return { marginTop: IphoneX() ? 34 : 20 };
+    if (IOS) return { paddingTop: IphoneX() ? 34 : 20 };
   },
 
   screenWidth: (percentage = 1) => ({

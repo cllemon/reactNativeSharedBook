@@ -1,35 +1,31 @@
 export const backgroundColorMap = [
   {
-    label: '银河白',
-    value: '#FFFFFF'
-  },
-  {
     label: '羊皮卷',
     value: 'tan'
   },
   {
     label: '杏仁黄',
-    value: '#FAF9DE'
-  },
-  {
-    label: '极光灰',
-    value: '#EAEAEF'
-  },
-  {
-    label: '秋叶褐',
-    value: '#FFF2E2'
-  },
-  {
-    label: '海天蓝',
-    value: '#DCE2F1'
-  },
-  {
-    label: '胭脂红',
-    value: '#FDE6E0'
+    value: '#F4E5BE'
   },
   {
     label: '青草绿',
-    value: '#E3EDCD'
+    value: '#C0EDB9'
+  },
+  {
+    label: '银河白',
+    value: '#FFFFFF'
+  },
+  {
+    label: '极光灰',
+    value: '#F0F0F0'
+  },
+  {
+    label: '海天蓝',
+    value: '#D5E1F9'
+  },
+  {
+    label: '夜',
+    value: '#666666'
   }
 ];
 

@@ -6,7 +6,8 @@ export const themes = (color = '#fff') => ({
     body: {
       '-webkit-user-select': 'none',
       'user-select': 'none',
-      'background-color': color
+      'background-color': color,
+      'font-size': 30
     }
   }
 });
