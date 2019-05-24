@@ -18,7 +18,7 @@
 > 目前项目很多功能只是初版，资源量也不是很大，但是这些都将会利用工作之余慢慢更新迭代。
 
 > 本项目所有接口来源均是利用 [eggjs](https://github.com/eggjs/egg/) 写的一套 node 服务，
-> 由于初版使用 js 写的，后期慢慢会用 TS 重构，所以这个项目就不放上来了，[API - 接口文档]()。
+> 由于初版使用 js 写的，后期慢慢会用 TS 重构，所以这个项目就不放上来了，[API - 接口文档](https://github.com/cllemon/ReactNativeSharedBook/blob/master/app/assets/public/API.md)。
 
 > 由于服务带宽很小，请不要“疯炸”接口，若有需要数据请直接留言，我会直接放出来。
 
