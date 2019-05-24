@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./app/assets/images/logo.png" alt="" style="height: 100px; width: 100px;">
+  <img src="./app/assets/images/logo.png" alt="" height="100"  width="100">
 </p>
 <p align="center">
   <img src="https://img.shields.io/badge/License-MIT-lightgrey.svg" alt="">
@@ -28,63 +28,63 @@
 
 ### 注册页
 
-| instructions                         | Preview（IOS）                             | Preview（Android）                                                                     |
-| ------------------------------------ | ------------------------------------------ | -------------------------------------------------------------------------------------- |
-| `提供用户注册的页面，生成账户的页面` | ![register_ios](./public/register_ios.gif) | <img src="./public/register_android.png" alt="" style="height:  362px; width: 187px;"> |
+| instructions                         | Preview（IOS）                             | Preview（Android）                                                         |
+| ------------------------------------ | ------------------------------------------ | -------------------------------------------------------------------------- |
+| `提供用户注册的页面，生成账户的页面` | ![register_ios](./public/register_ios.gif) | <img src="./public/register_android.png" alt="" height="362"  width="187"> |
 
 ### 登录页
 
-| instructions         | Preview（IOS）                       | Preview（Android）                                                                  |
-| -------------------- | ------------------------------------ | ----------------------------------------------------------------------------------- |
-| `用于用户登录的页面` | ![login_ios](./public/login_ios.gif) | <img src="./public/login_android.png" alt="" style="height:  362px; width: 187px;"> |
+| instructions         | Preview（IOS）                       | Preview（Android）                                                      |
+| -------------------- | ------------------------------------ | ----------------------------------------------------------------------- |
+| `用于用户登录的页面` | ![login_ios](./public/login_ios.gif) | <img src="./public/login_android.png" alt="" height="362"  width="187"> |
 
 ### 书城页
 
-| instructions                                     | Preview（IOS）                            | Preview（Android）                                                                    |
-| ------------------------------------------------ | ----------------------------------------- | ------------------------------------------------------------------------------------- |
-| `书城承载了所有图书资源，包含一级分类及推介数目` | ![register_ios](./public/library_ios.gif) | <img src="./public/library_android.png" alt="" style="height:  362px; width: 187px;"> |
+| instructions                                     | Preview（IOS）                            | Preview（Android）                                                        |
+| ------------------------------------------------ | ----------------------------------------- | ------------------------------------------------------------------------- |
+| `书城承载了所有图书资源，包含一级分类及推介数目` | ![register_ios](./public/library_ios.gif) | <img src="./public/library_android.png" alt="" height="362"  width="187"> |
 
 ### 列表页
 
-| instructions                                                 | Preview（IOS）                           | Preview（Android）                                                                 |
-| ------------------------------------------------------------ | ---------------------------------------- | ---------------------------------------------------------------------------------- |
-| `展示对应一级分类下所有图书列表，包含二级图书类目及图书信息` | ![login_ios](./public/book_list_ios.gif) | <img src="./public/list_android.png" alt="" style="height:  362px; width: 187px;"> |
+| instructions                                                 | Preview（IOS）                           | Preview（Android）                                                     |
+| ------------------------------------------------------------ | ---------------------------------------- | ---------------------------------------------------------------------- |
+| `展示对应一级分类下所有图书列表，包含二级图书类目及图书信息` | ![login_ios](./public/book_list_ios.gif) | <img src="./public/list_android.png" alt="" height="362"  width="187"> |
 
 ### 详情页
 
-| instructions           | Preview（IOS）                                | Preview（Android）                                                                   |
-| ---------------------- | --------------------------------------------- | ------------------------------------------------------------------------------------ |
-| `介绍每一本书详细信息` | ![register_ios](./public/book_detail_ios.gif) | <img src="./public/detail_android.png" alt="" style="height:  362px; width: 187px;"> |
+| instructions           | Preview（IOS）                                | Preview（Android）                                                       |
+| ---------------------- | --------------------------------------------- | ------------------------------------------------------------------------ |
+| `介绍每一本书详细信息` | ![register_ios](./public/book_detail_ios.gif) | <img src="./public/detail_android.png" alt="" height="362"  width="187"> |
 
 ### 阅读器页
 
-| instructions                                                   | Preview（IOS）                              | Preview（Android）                                                                    |
-| -------------------------------------------------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------- |
-| `用于解析资源，阅读的容器，实现基本的目录、换肤、阅读基本功能` | ![login_ios](./public/book_reading_ios.gif) | <img src="./public/reading_android.png" alt="" style="height:  362px; width: 187px;"> |
+| instructions                                                   | Preview（IOS）                              | Preview（Android）                                                        |
+| -------------------------------------------------------------- | ------------------------------------------- | ------------------------------------------------------------------------- |
+| `用于解析资源，阅读的容器，实现基本的目录、换肤、阅读基本功能` | ![login_ios](./public/book_reading_ios.gif) | <img src="./public/reading_android.png" alt="" height="362"  width="187"> |
 
 ### 我的页
 
-| instructions                                                 | Preview（IOS）                         | Preview（Android）                                                                 |
-| ------------------------------------------------------------ | -------------------------------------- | ---------------------------------------------------------------------------------- |
-| `主要放一些展示用户信息，设置等将在后期迭代更新的功能点入口` | ![register_ios](./public/mine_ios.gif) | <img src="./public/mine_android.png" alt="" style="height:  362px; width: 187px;"> |
+| instructions                                                 | Preview（IOS）                         | Preview（Android）                                                     |
+| ------------------------------------------------------------ | -------------------------------------- | ---------------------------------------------------------------------- |
+| `主要放一些展示用户信息，设置等将在后期迭代更新的功能点入口` | ![register_ios](./public/mine_ios.gif) | <img src="./public/mine_android.png" alt="" height="362"  width="187"> |
 
 ### 个人信息页及书架
 
-| instructions                               | Preview（IOS）                               | Preview（Android）                                                                     |
-| ------------------------------------------ | -------------------------------------------- | -------------------------------------------------------------------------------------- |
-| `主要用于展示用户个人信息，及编辑个人信息` | ![login_ios](./public/personal_info_ios.gif) | <img src="./public/bookcase_android.png" alt="" style="height:  362px; width: 187px;"> |
+| instructions                               | Preview（IOS）                               | Preview（Android）                                                         |
+| ------------------------------------------ | -------------------------------------------- | -------------------------------------------------------------------------- |
+| `主要用于展示用户个人信息，及编辑个人信息` | ![login_ios](./public/personal_info_ios.gif) | <img src="./public/bookcase_android.png" alt="" height="362"  width="187"> |
 
 ### 设置页
 
-| instructions                                 | Preview（IOS）                         | Preview（Android）                                                                    |
-| -------------------------------------------- | -------------------------------------- | ------------------------------------------------------------------------------------- |
-| `主要承载一些基础功能展示，及编辑的功能页面` | ![login_ios](./public/setting_ios.gif) | <img src="./public/setting_android.png" alt="" style="height:  362px; width: 187px;"> |
+| instructions                                 | Preview（IOS）                         | Preview（Android）                                                        |
+| -------------------------------------------- | -------------------------------------- | ------------------------------------------------------------------------- |
+| `主要承载一些基础功能展示，及编辑的功能页面` | ![login_ios](./public/setting_ios.gif) | <img src="./public/setting_android.png" alt="" height="362"  width="187"> |
 
 ### 搜索页
 
-| instructions                         | Preview（IOS）                        | Preview（Android）                                                                   |
-| ------------------------------------ | ------------------------------------- | ------------------------------------------------------------------------------------ |
-| `用于快捷搜索图书，主要检索图书名称` | ![login_ios](./public/search_ios.gif) | <img src="./public/search_android.png" alt="" style="height:  362px; width: 187px;"> |
+| instructions                         | Preview（IOS）                        | Preview（Android）                                                       |
+| ------------------------------------ | ------------------------------------- | ------------------------------------------------------------------------ |
+| `用于快捷搜索图书，主要检索图书名称` | ![login_ios](./public/search_ios.gif) | <img src="./public/search_android.png" alt="" height="362"  width="187"> |
 
 ## 开发环境及第三方框架
 
