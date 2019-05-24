@@ -10,7 +10,8 @@ const HeaderPropsType = {
   right: PropTypes.children,
   onLeftPress: PropTypes.function,
   onRightPress: PropTypes.function,
-  navigation: PropTypes.object
+  navigation: PropTypes.object,
+  style: PropTypes.object
 };
 
 const HeaderDefaultProps = {
@@ -19,7 +20,8 @@ const HeaderDefaultProps = {
   right: null,
   onLeftPress: null,
   onRightPress: () =>
-    console.log('Please attach a method called onRightPress to this component')
+    console.log('Please attach a method called onRightPress to this component'),
+  style: {}
 };
 
 const HEADER_STYLE = Object.assign(
@@ -42,7 +44,11 @@ export default class Header extends Component {
 
   _renderLeft = () => {
     return (
-      <TouchableOpacity onPress={this._onLeftPress} activeOpacity={0.8}>
+      <TouchableOpacity
+        onPress={this._onLeftPress}
+        activeOpacity={0.8}
+        style={{ padding: 10 }}
+      >
         {this.props.left}
       </TouchableOpacity>
     );
@@ -51,7 +57,11 @@ export default class Header extends Component {
   _renderRight = () => {
     if (this.props.right) {
       return (
-        <TouchableOpacity onPress={this.props.onRightPress} activeOpacity={0.8}>
+        <TouchableOpacity
+          onPress={this.props.onRightPress}
+          activeOpacity={0.8}
+          style={{ padding: 10 }}
+        >
           {this.props.right}
         </TouchableOpacity>
       );
@@ -67,7 +77,7 @@ export default class Header extends Component {
           backgroundColor={variable.$main_color_white}
           barStyle={'dark-content'}
         />
-        <View style={HEADER_STYLE}>
+        <View style={[HEADER_STYLE, this.props.style]}>
           {this._renderLeft()}
           <Text style={[common.h(), { maxWidth: 200 }]} numberOfLines={1}>
             {this.props.title}

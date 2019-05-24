@@ -4,7 +4,8 @@ import { asyncRead } from './asyncStorage';
 import Toast from 'react-native-root-toast';
 
 const DEFAULT_OPTIONS = {
-  baseURL: global.__DEV__ ? constance.DEV : constance.WWW,
+  // baseURL: global.__DEV__ ? constance.DEV : constance.WWW,
+  baseURL: constance.WWW,
   timeout: constance.TIMEOUT,
   headers: { 'Content-Type': 'application/json;charset=UTF-8' }
 };

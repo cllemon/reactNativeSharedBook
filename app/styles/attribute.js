@@ -71,7 +71,7 @@ export default {
 
   border: (w = 1, c = 'rgba(238,238,238,1)', s = 'solid') => ({
     borderWidth: w,
-    borderColor: c,
-    borderStyle: s
+    borderColor: c
+    // borderStyle: s
   })
 };

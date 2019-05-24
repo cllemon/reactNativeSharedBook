@@ -308,13 +308,13 @@ class Detail extends Component {
 const styles = StyleSheet.create({
   /** 图书卡片 */
   card_img_wraper: {
-    ...common.border(),
-    ...common.shadow(2, variable.$ios_box_shadow_book),
-    ...common.screenHeight(140 / 812),
+    ...common.shadow(-2, variable.$ios_box_shadow_book),
+    ...common.screenHeight(140),
     ...common.screenWidth(100 / 375)
   },
   card_img: {
-    ...common.screenHeight(140 / 812),
+    ...common.border(1, '#eee'),
+    ...common.screenHeight(140),
     ...common.screenWidth(100 / 375)
   },
   card_content: {

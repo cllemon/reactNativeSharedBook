@@ -325,11 +325,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   card_img_wraper: {
-    ...common.border(),
     ...common.shadow(2, variable.$ios_box_shadow_book)
   },
   card_img: {
-    ...common.screenHeight(112 / 812),
+    ...common.border(),
+    ...common.screenHeight(112),
     ...common.screenWidth(80 / 375)
   },
   card_content: {

@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import TitleBar from '../widget/TitleBar';
-import { common } from '../../styles';
+import { common, variable } from '../../styles';
 import { getCategories } from '../../services/library';
 
 const ClassificationPropsType = {
@@ -43,13 +43,18 @@ export default class Classification extends Component {
   }
 
   onMore = () => {
-    this.setState({ showCount: this.state.list.length });
+    const { showCount, list } = this.state;
+    this.setState({ showCount: showCount > 6 ? 6 : list.length });
   };
 
   render() {
     return (
       <View style={styles.classification}>
-        <TitleBar title='全部分类' label='更多' onPress={this.onMore} />
+        <TitleBar
+          title='全部分类'
+          label={this.state.showCount > 6 ? '折叠' : '展开'}
+          onPress={this.onMore}
+        />
         <View style={styles.content}>
           {this.state.list.map((item, index) => {
             return (
@@ -107,7 +112,8 @@ const styles = StyleSheet.create({
   img: {
     height: 106,
     width: 106,
-    borderRadius: 4
+    borderRadius: 4,
+    ...common.shadow(2, variable.$ios_box_shadow_book)
   },
   img_text: {
     ...common.h(13, '#2C2C2C'),

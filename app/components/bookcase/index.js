@@ -189,7 +189,7 @@ export default class Bookcase extends Component {
               <Icon name='plus' style={common.fontColorSize('#eee', 100)} />
             </Text>
           */}
-          <Text style={common.fontColorSize('#999', 12)}>
+          <Text style={common.fontColorSize('#999', 15)}>
             你的书架暂无书籍，去书城逛逛吧！
           </Text>
         </TouchableOpacity>

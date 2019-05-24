@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { common } from '../../styles/index';
 import TitleBar from '../widget/TitleBar';
 import { getBookRecommend } from '../../services/books';
+import Toast from 'react-native-root-toast';
 
 const RecommendedPropsType = {
   navigation: PropTypes.object
@@ -28,6 +29,7 @@ export default class Recommended extends Component {
   getRecommendedList = async () => {
     try {
       const list = await getBookRecommend();
+      Toast.show('  更新成功  ', { position: 240 });
       this.setState({ list });
     } catch (error) {
       console.log('获取推荐图书异常', error);
@@ -86,6 +88,7 @@ const styles = StyleSheet.create({
     width: 100
   },
   content_item_img: {
+    ...common.border(),
     height: 140,
     width: 100
   },

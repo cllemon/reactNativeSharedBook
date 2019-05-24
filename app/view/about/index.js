@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   title: {
     ...common.fontColorSize('#697B84', 16),
     lineHeight: 22,
-    marginTop: 3,
+    marginTop: 13,
     textAlign: 'center',
     letterSpacing: 6
   },
