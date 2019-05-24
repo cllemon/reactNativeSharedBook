@@ -26,17 +26,7 @@
 
 ## 项目内容
 
-### 注册页
 
-| instructions                         | Preview（IOS）                             | Preview（Android）                                                         |
-| ------------------------------------ | ------------------------------------------ | -------------------------------------------------------------------------- |
-| `提供用户注册的页面，生成账户的页面` | ![register_ios](./public/register_ios.gif) | <img src="./public/register_android.png" alt="" height="362"  width="187"> |
-
-### 登录页
-
-| instructions         | Preview（IOS）                       | Preview（Android）                                                      |
-| -------------------- | ------------------------------------ | ----------------------------------------------------------------------- |
-| `用于用户登录的页面` | ![login_ios](./public/login_ios.gif) | <img src="./public/login_android.png" alt="" height="362"  width="187"> |
 
 ### 书城页
 
@@ -61,6 +51,18 @@
 | instructions                                                   | Preview（IOS）                              | Preview（Android）                                                        |
 | -------------------------------------------------------------- | ------------------------------------------- | ------------------------------------------------------------------------- |
 | `用于解析资源，阅读的容器，实现基本的目录、换肤、阅读基本功能` | ![login_ios](./public/book_reading_ios.gif) | <img src="./public/reading_android.png" alt="" height="362"  width="187"> |
+
+### 注册页
+
+| instructions                         | Preview（IOS）                             | Preview（Android）                                                         |
+| ------------------------------------ | ------------------------------------------ | -------------------------------------------------------------------------- |
+| `提供用户注册的页面，生成账户的页面` | ![register_ios](./public/register_ios.gif) | <img src="./public/register_android.png" alt="" height="362"  width="187"> |
+
+### 登录页
+
+| instructions         | Preview（IOS）                       | Preview（Android）                                                      |
+| -------------------- | ------------------------------------ | ----------------------------------------------------------------------- |
+| `用于用户登录的页面` | ![login_ios](./public/login_ios.gif) | <img src="./public/login_android.png" alt="" height="362"  width="187"> |
 
 ### 我的页
 
