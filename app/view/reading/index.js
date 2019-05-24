@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, Slider, TouchableOpacity } from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  Modal,
+  TouchableOpacity,
+  ScrollView
+} from 'react-native';
 import { common, variable } from '../../styles/index';
 import Header from '../../components/widget/Header';
 import Button from '../../components/widget/Button';
@@ -8,6 +15,8 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import { Epub, Streamer } from 'epubjs-rn';
 import { themes } from '../../plugin/utils';
 import { backgroundColorMap } from '../../plugin/enume';
+import Directory from './Directory';
+import Toast from 'react-native-root-toast';
 
 class Reading extends Component {
   constructor(props) {
@@ -25,7 +34,8 @@ class Reading extends Component {
       disabled: true, // 是否禁用滑动
       total: 0, // 总页数
       showBars: false, // 是否显示操作面板
-      visibleLocation: {} // 页面位置改变, 所变动的信息
+      visibleLocation: {}, // 页面位置改变, 所变动的信息
+      modalVisible: false
     };
   }
 
@@ -45,39 +55,48 @@ class Reading extends Component {
         epub: detailInfo.epub
       });
     } catch (error) {
-      console.log('文件静态服务挂了', error);
+      this.props.navigation.goBack();
+      Toast.show('文件解析异常，请重试', { position: 0 });
+      console.log('文件静态服务异常', error);
     }
   }
 
   _renderReadEpub = () => {
-    const { backgroundColor, location, origin, src, flow } = this.state;
-    return (
-      <Epub
-        ref={_ref => (this.EPUB = _ref)}
-        style={styles.reader}
-        theme='tan'
-        themes={themes(backgroundColor)}
-        location={location}
-        origin={origin}
-        src={src}
-        flow={flow}
-        onReady={book => {
-          this.setState({
-            toc: book.navigation.toc
-          });
-          console.log('epub --- onReady:', book);
-        }}
-        onLocationsReady={locations => {
-          this.setState({
-            disabled: false,
-            total: locations.total
-          });
-          console.log('epub --- onLocationsReady:', locations);
-        }}
-        onPress={() => this.setState({ showBars: !this.state.showBars })}
-        onLocationChange={visibleLocation => this.setState({ visibleLocation })}
-      />
-    );
+    try {
+      const { backgroundColor, location, origin, src, flow, epub } = this.state;
+      return (
+        <Epub
+          ref={_ref => (this.EPUB = _ref)}
+          style={styles.reader}
+          theme='tan'
+          themes={themes(backgroundColor)}
+          location={location}
+          origin={origin}
+          src={src}
+          flow={flow}
+          onReady={book => {
+            this.setState({
+              toc: book.navigation.toc
+            });
+            console.log('epub --- onReady:', book);
+          }}
+          onLocationsReady={locations => {
+            this.setState({
+              disabled: false,
+              total: locations.total
+            });
+            console.log('epub --- onLocationsReady:', locations);
+          }}
+          onPress={() => this.setState({ showBars: !this.state.showBars })}
+          onLocationChange={visibleLocation =>
+            this.setState({ visibleLocation })
+          }
+          onError={value => console.log(value, '解析错误')}
+        />
+      );
+    } catch (error) {
+      console.log(error, '渲染图书异常');
+    }
   };
 
   _renderReadContainer = () => {
@@ -89,7 +108,11 @@ class Reading extends Component {
             <Header
               navigation={this.props.navigation}
               title={this.state.detailInfo.title}
-              right={<Icon name='ellipsis1' style={common.fontColorSize()} />}
+              right={<Icon name='profile' style={common.fontColorSize()} />}
+              style={common.ios && styles.header}
+              onRightPress={() => {
+                this.state.showBars && this.Directory.show();
+              }}
             />
           </OperateContainer>
         </View>
@@ -98,15 +121,45 @@ class Reading extends Component {
             {this._renderBottom()}
           </OperateContainer>
         </View>
+        <Directory
+          ref={_ref => (this.Directory = _ref)}
+          list={this.state.toc}
+          location={this.state.location}
+          setPostion={location => this.setState({ location })}
+        />
       </View>
     );
   };
 
   _renderBottom = () => {
-    const { backgroundColor, disabled, visibleLocation } = this.state;
-    const start = visibleLocation.start || {};
+    const { backgroundColor, flow } = this.state;
+    const paginated = flow === 'paginated';
     return (
       <View style={styles.bottom}>
+        <View style={styles.bottom_mode}>
+          <Text
+            style={[
+              styles.bottom_mode_text,
+              paginated && styles.bottom_mode_active
+            ]}
+            onPress={() => {
+              this.setState({ flow: 'paginated' });
+            }}
+          >
+            翻页
+          </Text>
+          <Text
+            style={[
+              styles.bottom_mode_text,
+              !paginated && styles.bottom_mode_active
+            ]}
+            onPress={() => {
+              this.setState({ flow: 'scrolled-continuous' });
+            }}
+          >
+            滚动
+          </Text>
+        </View>
         <View style={styles.bottom_bgc}>
           {backgroundColorMap.map((color, index) => {
             const currentColor = backgroundColor === color.value;
@@ -121,22 +174,11 @@ class Reading extends Component {
                 ]}
                 key={index}
                 onPress={() => {
-                  !disabled && this.setState({ backgroundColor: color.value });
+                  this.setState({ backgroundColor: color.value });
                 }}
               />
             );
           })}
-        </View>
-        <View style={styles.bottom_bgc}>
-          <Slider
-            disabled={disabled}
-            style={styles.slider}
-            value={start.percentage || 0}
-            onSlidingComplete={value =>
-              this.setState({ location: value.toFixed(6) })
-            }
-          />
-          <Text>{`${start.location || 0}/${this.state.total}`}</Text>
         </View>
       </View>
     );
@@ -146,14 +188,22 @@ class Reading extends Component {
     return (
       <View style={[common.flex(), common.bgc()]}>
         <Header title='阅读器' navigation={this.props.navigation} />
-        <Button title='此资源暂时没有，获取资源？' onPress={this.getSource} />
-        <View>
-          <Text>说明:</Text>
-          <Text>
-            资源 epub 文件破解暂时还未攻破，故资源无效若您能破解欢迎留言
+        <View style={common.layout_flex_middle()}>
+          <View>
+            <Text style={common.h(17, '#999')}>暂无此资源</Text>
+          </View>
+          <Text style={common.fontColorSize('#99a', 13)}>
+            {`
+          说明:\n
+            资源 epub 文件破解暂时还未全部攻破，故
+            资源有限，但是作者会持续更进资源更新。\n
+            如果您非常想阅读本书，您可以到作者对应
+            仓库留言，作者将会及时更新资源。\n
+            如果您对本项目感兴趣，也欢迎大家一起努力
+            建立一个免费共享的图书库，方便你我阅读。\n
+            感谢您的使用！\n
+            `}
           </Text>
-          <Text>您可以通过获取资源去间接获取</Text>
-          <Text>也可以留言，等候作者定期更新</Text>
         </View>
       </View>
     );
@@ -180,7 +230,7 @@ const styles = StyleSheet.create({
     right: 0
   },
   bottom: {
-    ...common.screenHeight(256 / 812),
+    ...common.screenHeight(156 / 812),
     ...common.screenWidth(),
     ...common.bgc(),
     ...common.shadow(1, variable.$ios_box_shadow_base),
@@ -203,6 +253,26 @@ const styles = StyleSheet.create({
   slider: {
     ...common.screenWidth(267 / 375),
     height: 30
+  },
+  header: {
+    marginTop: 0,
+    height: common.isIphoneX() ? 86 : 50,
+    paddingTop: common.isIphoneX() ? 30 : 10
+  },
+  bottom_mode: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20
+  },
+  bottom_mode_text: {
+    textAlign: 'center',
+    borderRadius: 4,
+    ...common.border(1, '#9c9c9c'),
+    ...common.pVerticalHorizontal(4, 10)
+  },
+  bottom_mode_active: {
+    borderColor: '#5E94FF',
+    color: '#5E94FF'
   }
 });
 

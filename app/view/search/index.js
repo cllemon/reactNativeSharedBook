@@ -11,6 +11,7 @@ import Header from '../../components/widget/Header';
 import { common, variable } from '../../styles/index';
 import Icon from 'react-native-vector-icons/Feather';
 import Input from '../../components/widget/input/index';
+import Loading from '../../components/widget/Loading';
 import { getSearchList } from '../../services/books';
 
 class Search extends Component {
@@ -25,7 +26,8 @@ class Search extends Component {
 
   _onChangeText = keywords => {
     this.setState({ keywords });
-    if (keywords) this.getSearchResult({ keywords });
+    if (!keywords.trim()) return this.setState({ list: [] });
+    this.getSearchResult({ keywords });
   };
 
   async getSearchResult(params) {
@@ -49,7 +51,7 @@ class Search extends Component {
           onChangeText={keywords => this._onChangeText(keywords)}
           placeholder={'请输入书籍名称'}
           autoFocus
-          style={{ width: 220 }}
+          style={{ width: 200 }}
         />
       </View>
     );
@@ -105,6 +107,7 @@ class Search extends Component {
             <Text style={styles.none_text}>暂无结果</Text>
           )}
         </ScrollView>
+        <Loading visible={this.state.loading} />
       </View>
     );
   }
@@ -112,7 +115,7 @@ class Search extends Component {
 
 const styles = StyleSheet.create({
   search: {
-    ...common.screenWidth(299 / 375),
+    ...common.screenWidth(279 / 375),
     ...common.bgc('#F9F9F9'),
     height: 32,
     flexDirection: 'row',
@@ -122,7 +125,8 @@ const styles = StyleSheet.create({
   },
   search_icon: {
     ...common.fontColorSize('#D3D3D3', 20),
-    marginRight: 10
+    paddingLeft: 10
+    // marginRight: 10
   },
 
   none_text: {
