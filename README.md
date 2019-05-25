@@ -2,8 +2,10 @@
   <img src="./app/assets/images/logo.png" alt="" height="100"  width="100">
 </p>
 <p align="center">
+  <img src="https://img.shields.io/badge/release-v1.0.0-67C23A.svg" alt="">
+  <img src="https://img.shields.io/badge/size-16.9M-409EFF.svg" alt="">
+  <img src="https://img.shields.io/badge/Powered%20by-reactNative-28b1b0.svg" alt="">
   <img src="https://img.shields.io/badge/License-MIT-lightgrey.svg" alt="">
-  <img src="https://img.shields.io/badge/Powered%20by-ReactNative-28b1b0.svg" alt="">
 </p>
 <h2 align="center"> react-native-share-book </h2>
 
@@ -22,6 +24,17 @@
 > 由于服务带宽很小，请不要“疯炸”接口，若有需要数据请直接留言，我会直接放出来。
 
 > 如果对您有帮助，您可以点右上角 "Star" 鼓励一下 谢谢！ ^\_^
+
+## 在线体验
+
+通过下面的二维码，可以在手机中安装体验 React-Native-share-book
+
+|         | 二维码                                     | 描述                                                                  |
+| ------- | ------------------------------------------ | --------------------------------------------------------------------- |
+| Android | ![](https://www.pgyer.com/app/qrcode/fMpd) | [ React-Native-share-book (点击下载 apk)](https://www.pgyer.com/fMpd) |
+| IOS     | 如果感兴趣，可本地运行                     | 👍                                                                    |
+
+> 注：微信等扫码跳转，在浏览器打开允许下载即可。（ios 体验更好：建议本地运行，获取 ios 证书，本地装。）
 
 ## 项目主体
 
