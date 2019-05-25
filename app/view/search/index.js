@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     ...common.shadow(2, variable.$ios_box_shadow_book)
   },
   card_img: {
-    ...common.screenHeight(112 / 812),
+    ...common.screenHeight(112),
     ...common.screenWidth(80 / 375)
   },
   card_content: {

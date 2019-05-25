@@ -15,6 +15,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import { asyncRead } from '../../plugin/asyncStorage';
 import constance from '../../plugin/constance';
 import { getBookcaseList, removeBookcase } from '../../services/bookcase';
+import { getBookDetail } from '../../services/books';
 import Toast from 'react-native-root-toast';
 
 const A_ROW_BOOK_COUNT = 3;
@@ -25,7 +26,8 @@ export default class Bookcase extends Component {
     this.state = {
       loading: false,
       edit: false,
-      books: []
+      books: [],
+      userInfo: {}
     };
   }
 
@@ -43,7 +45,7 @@ export default class Bookcase extends Component {
       if (!userInfo.user_id) return false;
       this.setState({ loading: true });
       const { list } = await getBookcaseList({ user_id: userInfo.user_id });
-      this.setState({ books: this.integerList(list) });
+      this.setState({ books: this.integerList(list), userInfo });
     } catch (error) {
       console.log('拉取书柜藏书列表异常', error);
     } finally {
@@ -70,12 +72,21 @@ export default class Bookcase extends Component {
    * @param {*} book
    * @memberof Bookcase
    */
-  _onPress(book) {
-    // 直接去阅读
-    if (book && !this.state.edit) {
-      // this.props.navigation.navigate('Detail', { book });
+  _onPress = async book => {
+    try {
+      if (book && !this.state.edit) {
+        const detailInfo = await getBookDetail({ book_id: book.book_id });
+        this.props.navigation.navigate('Reading', {
+          detailInfo: {
+            ...detailInfo,
+            user_id: this.state.userInfo.user_id
+          }
+        });
+      }
+    } catch (error) {
+      console.log(`书架页：拉取图书详情异常：${JSON.stringify(error)}`);
     }
-  }
+  };
 
   /**
    * 响应长按 删除
@@ -150,7 +161,6 @@ export default class Bookcase extends Component {
    */
   _scrollContent = books => {
     if (books && books.length) {
-      // 这里每次进来时需要下拉刷新
       return (
         <ScrollView
           refreshControl={
@@ -264,16 +274,3 @@ const styles = StyleSheet.create({
     opacity: 0.7
   }
 });
-
-const mock = [
-  {
-    url:
-      'http://cover.read.duokan.com/mfsv2/download/fdsc3/p01ghYscV33C/TnxjtsHAtAAVI0.jpg!s',
-    id: 2
-  },
-  {
-    url:
-      'http://cover.read.duokan.com/mfsv2/download/s010/p01EtppO1cU7/zLB8PHWW0XKZ4h.jpg!s',
-    id: 33
-  }
-];

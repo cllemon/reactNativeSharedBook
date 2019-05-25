@@ -1,6 +1,6 @@
 import axios from 'axios';
 import constance from './constance';
-import { asyncRead } from './asyncStorage';
+import { asyncRead, asyncDelete } from './asyncStorage';
 import Toast from 'react-native-root-toast';
 
 const DEFAULT_OPTIONS = {
@@ -48,6 +48,8 @@ export default function(url, method, queryParams = {}) {
     instance(option)
       .then(res => {
         const { data } = res || {};
+        if (data && (data.code === 4005 || data.code === 4006))
+          asyncDelete(constance.USER_INFO);
         if (data && data.code !== 0)
           Toast.show(data.tips.text, { position: 0 });
         resolve(data.data);
