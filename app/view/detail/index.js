@@ -63,6 +63,8 @@ class Detail extends Component {
           book_id: book.book_id
         });
         this.setState({ isAddedBookcase: Boolean(Book.book_id) });
+        // 这里的处理欠妥，不应该去改变原数据。。。。
+        detailInfo.user_id = user_id;
       }
       this.setState({ detailInfo });
     } catch (error) {
@@ -76,7 +78,7 @@ class Detail extends Component {
     try {
       if (this.state.isAddedBookcase) {
         // return this.props.navigation.replace('Desk');
-        return;
+        return false;
       }
       const { user_id } = this.state.userInfo;
       if (!user_id) return this.goLogin();
@@ -243,8 +245,6 @@ class Detail extends Component {
   };
 
   _renderBottomOperate = () => {
-    // pluscircleo pluscircle
-    // staro star
     const IconName = this.state.isAddedBookcase
       ? 'checkcircleo'
       : 'pluscircleo';

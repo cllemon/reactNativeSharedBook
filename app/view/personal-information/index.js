@@ -103,8 +103,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   img: {
-    ...common.screenWidth(36 / 375),
-    ...common.screenHeight(36 / 812),
+    ...common.screenWidth(36),
+    ...common.screenHeight(36),
     borderRadius: 18
   },
   icon: {

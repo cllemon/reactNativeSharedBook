@@ -35,3 +35,12 @@ export const removeBookcase = (data = {}) => {
 export const addBookcase = (data = {}) => {
   return network('bookcase/add', 'POST', data);
 };
+
+/**
+ * 书柜页 - 更新读书进度
+ * @param {Object} data 参数
+ * @returns {Promise}
+ */
+export const updateProgress = (data = {}) => {
+  return network('bookcase/update', 'POST', data);
+};

@@ -14,13 +14,13 @@ import Header from '../../components/widget/Header';
 const DirectoryPropsType = {
   list: PropTypes.array,
   setPostion: PropTypes.func,
-  location: PropTypes.string
+  location: PropTypes.object
 };
 
 const DirectoryDefaultProps = {
   list: [],
   setPostion: () => {},
-  location: ''
+  location: {}
 };
 
 export default class Directory extends Component {
@@ -45,6 +45,7 @@ export default class Directory extends Component {
   };
 
   _renderList = () => {
+    const end = this.props.location.end || {};
     return (
       <View style={{ paddingBottom: 10 }}>
         {this.props.list.map((item, index) => {
@@ -57,7 +58,7 @@ export default class Directory extends Component {
                 <Text
                   style={[
                     styles.item_label,
-                    this.props.location === item.href && styles.active
+                    end.href === item.href && styles.active
                   ]}
                   numberOfLines={1}
                 >
@@ -79,7 +80,7 @@ export default class Directory extends Component {
                         <Text
                           style={[
                             styles.sub_label,
-                            this.props.location === item.href && styles.active
+                            end.href === sub.href && styles.active
                           ]}
                           numberOfLines={1}
                         >
