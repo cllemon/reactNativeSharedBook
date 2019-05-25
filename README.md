@@ -10,7 +10,7 @@
 <h2 align="center"> react-native-share-book </h2>
 
 > 最初写这个项目纯粹就是满足自己读书的要求同时扩展一下知识技能，
-> 后来发现周围很多认识的人都有阅读电子书的习惯，无奈大多第三方软件大多收费，
+> 后来发现周围很多认识的人都有阅读电子书的习惯，无奈大多第三方软件都收费，
 > 所以干脆自己好好去写一个以共享为主题的图书，让获取知识的途径更“便捷”。
 
 > 由于“闲余”时间比较有限，加之接触 react 不久，写的也难免会有些仓促（多多包涵）...
@@ -98,6 +98,23 @@
 | ------------------------------------------------------------------------------------------ | ------------------------------------- | ------------------------------------------------------------------------ |
 | `用于快捷搜索图书，主要检索图书名称, 后期会慢慢加上多字段检索，搜索热度，搜索推荐等功能点` | ![login_ios](./public/search_ios.gif) | <img src="./public/search_android.png" alt="" height="322"  width="200"> |
 
+## TODO
+接下来的开发重点
+
+- 项目整体体验优化
+- 代码层面及性能优化（这块得多花点心思，深入一下`react`）
+- 持续性的资源整合
+
+**计划中**
+
+- [ ] 用户信息可编辑
+- [ ] 书架移除交互 - 由`长按`改为`拖动`移除
+- [ ] ...
+
+**已知 Bug**
+
+- [ ] 阅读器界面横向翻页，不流畅。(后期将重构该页面)
+
 ## 本地运行
 
 1. [配置 react-native 环境](https://reactnative.cn/docs/getting-started/)
@@ -110,7 +127,7 @@
 
 5. 打开模拟器
 
-6. 运行项目 `$ npm run android || npm run ios` || `$ yarn android || yarn ios`
+6. 运行项目 `$ npm run android || npm run ios` 或者 `$ yarn android || yarn ios`
 
 > PS：
 > 运行 Android 项目时，先打开 Virtual Device 或者[真机调式](https://reactnative.cn/docs/running-on-device/)
@@ -131,6 +148,7 @@
   - [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons)
   - [react-native-swiper](https://github.com/react-native-community/react-native-swiper)
   - [react-navigation](https://github.com/react-navigation/react-navigation)
+  - [futurepress](https://github.com/futurepress)
 
 ## License
 
