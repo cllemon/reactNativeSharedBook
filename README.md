@@ -98,6 +98,23 @@
 | ------------------------------------------------------------------------------------------ | ------------------------------------- | ------------------------------------------------------------------------ |
 | `用于快捷搜索图书，主要检索图书名称, 后期会慢慢加上多字段检索，搜索热度，搜索推荐等功能点` | ![login_ios](./public/search_ios.gif) | <img src="./public/search_android.png" alt="" height="322"  width="200"> |
 
+## 本地运行
+
+1. [配置 react-native 环境](https://reactnative.cn/docs/getting-started/)
+
+2. 安装 react-native-cli `$ npm i -g react-native-cli`
+
+3. 克隆 react-native-share-book 仓库到本地
+
+4. 安装依赖 `$ yarn || npm i`
+
+5. 打开模拟器
+
+6. 运行项目 `$ npm run android || npm run ios` || `$ yarn android || yarn ios`
+
+> PS：
+> 运行 Android 项目时，先打开 Virtual Device 或者[真机调式](https://reactnative.cn/docs/running-on-device/)
+
 ## 开发环境及第三方框架
 
 - 开发环境:
