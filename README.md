@@ -1,11 +1,11 @@
 <p align="center">
   <img src="./app/assets/images/logo.png" alt="" height="100"  width="100">
 </p>
-<h5 align="center"> react-native-share-book </h5>
 <p align="center">
   <img src="https://img.shields.io/badge/License-MIT-lightgrey.svg" alt="">
   <img src="https://img.shields.io/badge/Powered%20by-ReactNative-28b1b0.svg" alt="">
 </p>
+<h2 align="center"> react-native-share-book </h2>
 
 > 最初写这个项目纯粹就是满足自己读书的要求同时扩展一下知识技能，
 > 后来发现周围很多认识的人都有阅读电子书的习惯，无奈大多第三方软件大多收费，
