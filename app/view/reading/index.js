@@ -1,58 +1,63 @@
 import React, { Component } from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  Modal,
-  TouchableOpacity,
-  ScrollView
-} from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { common, variable } from '../../styles/index';
 import Header from '../../components/widget/Header';
-import Button from '../../components/widget/Button';
 import OperateContainer from './OperateContainer';
 import Icon from 'react-native-vector-icons/AntDesign';
+import Directory from './Directory';
+import Toast from 'react-native-root-toast';
 import { Epub, Streamer } from 'epubjs-rn';
 import { themes } from '../../plugin/utils';
 import { backgroundColorMap } from '../../plugin/enume';
-import Directory from './Directory';
-import Toast from 'react-native-root-toast';
+import { updateProgress, getBookcaseBook } from '../../services/bookcase';
 
-class Reading extends Component {
+export default class Reading extends Component {
   constructor(props) {
     super(props);
     this.streamer = new Streamer();
     this.state = {
       detailInfo: {},
-      epub: '', // epub 资源
       backgroundColor: '#FFFFFF', // 阅读背景
       location: 0, // 阅读进度（上次阅读的位置）
       origin: '', // Streamer生成的本地源地址（在 epub 组件内用来做性能优化）
       src: '', // epub 渲染资源
-      flow: 'paginated', // [ paginated || scrolled-continuous ] 阅读模式
+      flow: 'scrolled-continuous', // [ paginated || scrolled-continuous ] 阅读模式
       toc: [], // 目录
-      disabled: true, // 是否禁用滑动
-      total: 0, // 总页数
+      // total: 0, // 总页数
       showBars: false, // 是否显示操作面板
-      visibleLocation: {}, // 页面位置改变, 所变动的信息
+      locationInfo: {}, // 页面位置改变, 所变动的信息
       modalVisible: false
     };
   }
 
-  componentWillUnmount() {
-    this.streamer.kill();
+  async componentWillUnmount() {
+    try {
+      const { start } = this.state.locationInfo;
+      const { user_id, book_id } = this.state.detailInfo;
+      if (start && user_id) {
+        await updateProgress({
+          user_id,
+          book_id,
+          progress: JSON.stringify(this.state.locationInfo)
+        });
+      }
+      this.streamer.kill();
+    } catch (error) {
+      console.log(`同步阅读进度异常${JSON.stringify(error)}`);
+    }
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     try {
       const { detailInfo } = this.props.navigation.state.params;
+      if (!detailInfo.epub) return false;
+      await this.getBookProgress(detailInfo);
       const origin = await this.streamer.start();
       const src = await this.streamer.get(detailInfo.epub);
       this.setState({
         origin,
         src,
-        detailInfo,
-        epub: detailInfo.epub
+        detailInfo
       });
     } catch (error) {
       this.props.navigation.goBack();
@@ -61,42 +66,35 @@ class Reading extends Component {
     }
   }
 
-  _renderReadEpub = () => {
-    try {
-      const { backgroundColor, location, origin, src, flow, epub } = this.state;
-      return (
-        <Epub
-          ref={_ref => (this.EPUB = _ref)}
-          style={styles.reader}
-          theme='tan'
-          themes={themes(backgroundColor)}
-          location={location}
-          origin={origin}
-          src={src}
-          flow={flow}
-          onReady={book => {
-            this.setState({
-              toc: book.navigation.toc
-            });
-            console.log('epub --- onReady:', book);
-          }}
-          onLocationsReady={locations => {
-            this.setState({
-              disabled: false,
-              total: locations.total
-            });
-            console.log('epub --- onLocationsReady:', locations);
-          }}
-          onPress={() => this.setState({ showBars: !this.state.showBars })}
-          onLocationChange={visibleLocation =>
-            this.setState({ visibleLocation })
-          }
-          onError={value => console.log(value, '解析错误')}
-        />
-      );
-    } catch (error) {
-      console.log(error, '渲染图书异常');
+  async getBookProgress(detailInfo) {
+    const { user_id, book_id } = detailInfo || {};
+    if (user_id && book_id) {
+      const book = await getBookcaseBook({
+        user_id,
+        book_id: book_id
+      });
+      const progress = JSON.parse(book.progress || '{}');
+      progress.start && this.setState({ location: progress.start.cfi });
     }
+  }
+
+  _renderReadEpub = () => {
+    const { backgroundColor, location, origin, src, flow } = this.state;
+    return (
+      <Epub
+        ref={_ref => (this.EPUB = _ref)}
+        style={styles.reader}
+        theme='tan'
+        themes={themes(backgroundColor)}
+        location={location}
+        origin={origin}
+        src={src}
+        flow={flow}
+        onReady={book => this.setState({ toc: book.navigation.toc })}
+        onPress={() => this.setState({ showBars: !this.state.showBars })}
+        onLocationChange={locationInfo => this.setState({ locationInfo })}
+      />
+    );
   };
 
   _renderReadContainer = () => {
@@ -124,7 +122,7 @@ class Reading extends Component {
         <Directory
           ref={_ref => (this.Directory = _ref)}
           list={this.state.toc}
-          location={this.state.location}
+          location={this.state.locationInfo}
           setPostion={location => this.setState({ location })}
         />
       </View>
@@ -194,14 +192,14 @@ class Reading extends Component {
           </View>
           <Text style={common.fontColorSize('#99a', 13)}>
             {`
-          说明:\n
-            资源 epub 文件破解暂时还未全部攻破，故
-            资源有限，但是作者会持续更进资源更新。\n
-            如果您非常想阅读本书，您可以到作者对应
-            仓库留言，作者将会及时更新资源。\n
-            如果您对本项目感兴趣，也欢迎大家一起努力
-            建立一个免费共享的图书库，方便你我阅读。\n
-            感谢您的使用！\n
+    说明:\n
+      资源 epub 文件破解暂时还未全部攻破，故
+      资源有限，但是作者会持续更进资源更新。\n
+      如果您非常想阅读本书，您可以到作者对应
+      仓库留言，作者将会及时更新资源。\n
+      如果您对本项目感兴趣，也欢迎大家一起努力
+      建立一个免费共享的图书库，方便你我阅读。\n
+      感谢您的使用！\n
             `}
           </Text>
         </View>
@@ -275,19 +273,3 @@ const styles = StyleSheet.create({
     color: '#5E94FF'
   }
 });
-
-export default Reading;
-
-/**
- * 页面位置改变 (每个页面调用的函数都会更改，报告当前的CFI)
- * @param {Object} visibleLocation
- * @param {Bolean} visibleLocation.isStart 是否是开始页
- * @param {Object} visibleLocation.start 开始
- * @param {Object} visibleLocation.end 结束
- * @param {String} visibleLocation.end.cfi 结束 cfi `epubcfi(/6/8[id_4]!/4[1T141-4d5c9af37f6c412686499367dff4781e]/10/1:149)`
- * @param {Object} visibleLocation.end.href 结束 章节 href `text00002.html`
- * @param {Object} visibleLocation.end.index 结束 index 章节 `3`
- * @param {Object} visibleLocation.end.displayed 章节信息
- * @param {Object} visibleLocation.end.displayed.page 章节信息 - 对应页 11
- * @param {Object} visibleLocation.end.displayed.total 章节信息 - 对应总页面 165
- */
