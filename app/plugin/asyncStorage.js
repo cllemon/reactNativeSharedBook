@@ -58,6 +58,3 @@ export const asyncDelete = async name => {
     return true;
   });
 };
-
-// 全局变量 使用也是 global.
-// global.storage = storage;

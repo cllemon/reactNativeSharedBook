@@ -26,6 +26,8 @@ export default {
 
   isIphoneX: IphoneX,
 
+  miniSreen: width <= 370 || height <= 568,
+
   iosHeaderMarginTop: () => {
     if (IOS) return { marginTop: IphoneX() ? 34 : 20 };
   },

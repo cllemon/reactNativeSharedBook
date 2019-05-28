@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    // justifyContent: 'flex-start',
     flexWrap: 'wrap'
   },
   item: {
@@ -105,18 +105,18 @@ const styles = StyleSheet.create({
         )
       },
       android: {
-        padding: common.screenWidth(0.035)['width']
+        padding: common.screenWidth(10)['width']
       }
     })
   },
   img: {
-    height: 106,
-    width: 106,
-    borderRadius: 4,
-    ...common.shadow(2, variable.$ios_box_shadow_book)
+    ...common.screenHeight(116 / 812),
+    ...common.screenWidth(100 / 375),
+    ...common.shadow(2, variable.$ios_box_shadow_book),
+    borderRadius: 4
   },
   img_text: {
-    ...common.h(13, '#2C2C2C'),
+    ...common.h(common.miniSreen ? 10 : 13, '#2C2C2C'),
     marginTop: 10,
     marginLeft: 10
   }

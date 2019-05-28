@@ -292,7 +292,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     paddingHorizontal: 10,
-    paddingVertical: 16
+    alignItems: 'center'
   },
   subclass_item: {
     maxWidth: 130,

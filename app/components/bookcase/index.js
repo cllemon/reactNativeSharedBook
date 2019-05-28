@@ -230,18 +230,17 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginTop: 24
+    marginTop: common.screenHeight(24 / 812)['height']
   },
   book: {
     ...common.screenWidth(0.297),
-    marginBottom: 24,
+    marginBottom: common.screenHeight(24 / 812)['height'],
     alignItems: 'center'
   },
   img_wraper: {
     ...common.border(),
     ...common.shadow(2, variable.$ios_box_shadow_book),
     ...common.mVerticalHorizontal(0, 28),
-    ...common.margin(0, 28, 0, 28),
     transform: [{ translateY: 2 }],
     position: 'relative'
   },

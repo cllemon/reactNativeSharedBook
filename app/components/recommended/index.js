@@ -79,18 +79,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     flexWrap: 'wrap',
-    marginHorizontal: 16,
-    minHeight: 150
+    paddingHorizontal: 16,
+    marginBottom: 16,
+    ...common.screenHeight(150 / 812)
   },
   content_item: {
     flexDirection: 'column',
     ...common.shadow(),
-    width: 100
+    ...common.screenWidth(100 / 375)
   },
   content_item_img: {
     ...common.border(),
-    height: 140,
-    width: 100
+    ...common.screenHeight(140 / 812),
+    ...common.screenWidth(100 / 375)
   },
   content_item_title: {
     ...common.fontColorSize('#3C3C3C', 14),
