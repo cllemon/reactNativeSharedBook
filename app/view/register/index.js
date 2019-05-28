@@ -5,7 +5,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   KeyboardAvoidingView,
-  Alert
+  Alert,
+  ScrollView
 } from 'react-native';
 import { common } from '../../styles/index';
 import { CANMERO_OPERATES } from '../../plugin/enume';
@@ -166,34 +167,36 @@ class Register extends Component {
     return (
       <View style={styles.register}>
         <Header navigation={this.props.navigation} title='注册' />
-        <KeyboardAvoidingView
-          style={styles.container}
-          behavior='position'
-          enabled
-        >
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => {
-              this.ActionSheet.setVisible();
-            }}
-            style={styles.avatar}
+        <ScrollView>
+          <KeyboardAvoidingView
+            style={styles.container}
+            behavior='position'
+            enabled
           >
-            <Image
-              style={styles.avatar_img}
-              source={
-                this.state.avatar_url
-                  ? { uri: this.state.avatar_url }
-                  : constance.DEFAULT_HEAD_URL
-              }
-            />
-            <View style={styles.avatar_camero}>
-              <Icon name='camerao' style={common.fontColorSize('#fff', 18)} />
-            </View>
-          </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => {
+                this.ActionSheet.setVisible();
+              }}
+              style={styles.avatar}
+            >
+              <Image
+                style={styles.avatar_img}
+                source={
+                  this.state.avatar_url
+                    ? { uri: this.state.avatar_url }
+                    : constance.DEFAULT_HEAD_URL
+                }
+              />
+              <View style={styles.avatar_camero}>
+                <Icon name='camerao' style={common.fontColorSize('#fff', 18)} />
+              </View>
+            </TouchableOpacity>
 
-          {this._renderForm()}
-          <Button loading={this.state.loading} onPress={this.onSubmit} />
-        </KeyboardAvoidingView>
+            {this._renderForm()}
+            <Button loading={this.state.loading} onPress={this.onSubmit} />
+          </KeyboardAvoidingView>
+        </ScrollView>
         <ActionSheet
           list={CANMERO_OPERATES}
           ref={_ref => (this.ActionSheet = _ref)}

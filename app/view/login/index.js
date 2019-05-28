@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView
+} from 'react-native';
 import Header from '../../components/widget/Header';
 import Input from '../../components/widget/input/index';
 import Label from '../../components/widget/Label';
@@ -116,16 +122,20 @@ class Login extends Component {
             navigation.navigate('Register');
           }}
         />
-        <View style={styles.title}>
-          <Text style={common.fontColorSize('#333333', 24)}>欢迎使用享阅</Text>
-        </View>
-        {this._renderForm()}
-        <Button
-          loading={this.props.userRelated.loading}
-          title='登 录'
-          onPress={this.onLogin}
-        />
-        {this._renderThirdLogin()}
+        <ScrollView>
+          <View style={styles.title}>
+            <Text style={common.fontColorSize('#333333', 24)}>
+              欢迎使用享阅
+            </Text>
+          </View>
+          {this._renderForm()}
+          <Button
+            loading={this.props.userRelated.loading}
+            title='登 录'
+            onPress={this.onLogin}
+          />
+          {this._renderThirdLogin()}
+        </ScrollView>
       </View>
     );
   }

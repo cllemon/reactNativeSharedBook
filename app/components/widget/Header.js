@@ -27,7 +27,7 @@ const HeaderDefaultProps = {
 const HEADER_STYLE = Object.assign(
   {},
   common.screenWidth(),
-  common.screenHeight(44),
+  common.screenHeight(44 / 812),
   common.layout_flex('space-between'),
   common.bgc(),
   common.pVerticalHorizontal(0, 16),
@@ -47,7 +47,7 @@ export default class Header extends Component {
       <TouchableOpacity
         onPress={this._onLeftPress}
         activeOpacity={0.8}
-        style={{ padding: 10 }}
+        style={{ padding: common.miniSreen ? 1 : 10 }}
       >
         {this.props.left}
       </TouchableOpacity>
@@ -60,7 +60,7 @@ export default class Header extends Component {
         <TouchableOpacity
           onPress={this.props.onRightPress}
           activeOpacity={0.8}
-          style={{ padding: 10 }}
+          style={{ padding: 6 }}
         >
           {this.props.right}
         </TouchableOpacity>
@@ -79,7 +79,10 @@ export default class Header extends Component {
         />
         <View style={[HEADER_STYLE, this.props.style]}>
           {this._renderLeft()}
-          <Text style={[common.h(), { maxWidth: 200 }]} numberOfLines={1}>
+          <Text
+            style={[common.h(common.miniSreen ? 15 : 18), { maxWidth: 200 }]}
+            numberOfLines={1}
+          >
             {this.props.title}
           </Text>
           {this._renderRight()}

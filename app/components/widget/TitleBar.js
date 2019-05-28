@@ -36,10 +36,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    ...common.mVerticalHorizontal(12, 15)
+    ...common.pVerticalHorizontal(12, 15)
   },
   title_bar_h: {
-    ...common.h(20, '#3C3C3C')
+    ...common.h(common.miniSreen ? 16 : 20, '#3C3C3C')
   },
   title_bar_operate: {
     ...common.fontColorSize('#5E94FF', 14)
