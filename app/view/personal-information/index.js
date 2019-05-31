@@ -8,8 +8,8 @@ import Toast from 'react-native-root-toast';
 const GENDER_MAP = { 0: '女', 1: '男' };
 
 export default class PersonalInformation extends Component {
-  onEdit = label => {
-    Toast.show(`${label}暂未开通编辑功能，请关注更新迭代哦~`, { position: 0 });
+  onEdit = params => {
+    this.props.navigation.navigate('Edit', params);
   };
 
   _renderArticle = () => {
@@ -20,7 +20,7 @@ export default class PersonalInformation extends Component {
           <TouchableOpacity
             style={styles.article}
             onPress={() => {
-              this.onEdit('头像');
+              // this.onEdit('头像');
             }}
           >
             <Text style={styles.left}>头像</Text>
@@ -32,7 +32,11 @@ export default class PersonalInformation extends Component {
           <TouchableOpacity
             style={styles.article}
             onPress={() => {
-              this.onEdit('用户名');
+              this.onEdit({
+                label: '用户名',
+                prop: 'nickname',
+                value: userInfo.nickname
+              });
             }}
           >
             <Text style={styles.left}>用户名</Text>
@@ -45,7 +49,11 @@ export default class PersonalInformation extends Component {
           <TouchableOpacity
             style={styles.article}
             onPress={() => {
-              this.onEdit('性别');
+              this.onEdit({
+                label: '性别',
+                prop: 'gender',
+                value: GENDER_MAP[userInfo.gender]
+              });
             }}
           >
             <Text style={styles.left}>性别</Text>
