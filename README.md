@@ -31,7 +31,7 @@
 
 |         | 二维码                                     | 描述                                                                  |
 | ------- | ------------------------------------------ | --------------------------------------------------------------------- |
-| Android | ![](https://www.pgyer.com/app/qrcode/fMpd) | [ React-Native-share-book (点击下载 apk)](https://www.pgyer.com/fMpd) |
+| Android | ![](https://www.pgyer.com/app/qrcode/YGeu?sign=&auSign=&code=) | [ React-Native-share-book (点击下载 apk)](https://www.pgyer.com/YGeu) |
 | IOS     | 如果感兴趣，可本地运行                     | 👍                                                                    |
 
 > 注：微信等扫码跳转，在浏览器打开允许下载即可。（ios 体验更好：建议本地运行，获取 ios 证书，本地装。）
